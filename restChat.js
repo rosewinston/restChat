@@ -23,7 +23,10 @@ document.getElementById('send-btn').addEventListener("click", sendText);
 // Watch for enter on message box
 document.getElementById('message').addEventListener("keydown", (e)=> {
     if (e.code == "Enter") {
-	sendText();
+	e.preventDefault();
+    sendText();
+    clearTextbox();
+    return false;
     }   
 });
 
@@ -72,18 +75,25 @@ function sendText() {
 	fetch(baseUrl+'/chat/send/'+myname+'/'+message, {
         method: 'get'
     })
+
     .then (response => response.json() )
     .then (data =>completeSend(data))
     .catch(error => {
         {alert("Error: Something went wrong:"+error);}
-    })    
+    })
+    clearTextbox();    
+}
 
+function clearTextbox() {
+    document.getElementById('message').value = "";
 }
 
 function completeFetch(result) {
 	messages = result["messages"];
 	messages.forEach(function (m,i) {
 		name = m['user'];
+        document.getElementById('members').innerHTML +=
+            "<font color='black'>" + "Rose" + ", ";
 		message = m['message'];
 		document.getElementById('chatBox').innerHTML +=
 	    	"<font color='red'>" + name + ": </font>" + message + "<br />";
@@ -101,6 +111,7 @@ function fetchMessage() {
         {console.log("Server appears down");}
     })  	
 }
+
 /* Functions to set up visibility of sections of the display */
 function startSession(name){
     state="on";
@@ -109,6 +120,7 @@ function startSession(name){
     document.getElementById('register').style.display = 'none';
     document.getElementById('user').innerHTML = "User: " + name;
     document.getElementById('chatinput').style.display = 'block';
+    document.getElementById('members').style.display = 'block';
     document.getElementById('status').style.display = 'block';
     document.getElementById('leave').style.display = 'block';
     /* Check for messages every 500 ms */
@@ -122,6 +134,7 @@ function leaveSession(){
     document.getElementById('register').style.display = 'block';
     document.getElementById('user').innerHTML = "";
     document.getElementById('chatinput').style.display = 'none';
+    document.getElementById('members').style.display = 'none';
     document.getElementById('status').style.display = 'none';
     document.getElementById('leave').style.display = 'none';
 	clearInterval(inthandle);

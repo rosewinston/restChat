@@ -43,7 +43,8 @@ int main(void) {
   Server svr;
   int nextUser=0;
   map<string,vector<string>> messageMap;
-	
+	vector<string> userList;
+
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
     res.set_header("Access-Control-Allow-Origin","*");
@@ -59,10 +60,11 @@ int main(void) {
     cout << username << " joins" << endl;
     
     // Check if user with this name exists
-    if (messageMap.count(username)) {
+    if (messageMap.count(username)) { 
     	result = "{\"status\":\"exists\"}";
     } else {
     	// Add user to messages map
+      userList.push_back(username);
     	messageMap[username]=empty;
     	result = "{\"status\":\"success\",\"user\":\"" + username + "\"}";
     }
