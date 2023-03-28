@@ -34,17 +34,18 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap) 
 		result += message;
 		first = false;
 	}
-  result += "]}";
+  result += "],";
   messageMap[username].clear();
-  // bool loopOne = true;
-  // string userList = "{\"users\":""\"";
-  // for (const auto &[user, messages]: messageMap) {
-  //   if (not loopOne) userList += ",""\"";
-  //   userList += user +"\"";
-  //   loopOne = false;
-  // }
-  // result+=userList;
-	// result += "}";
+  bool loopOne = true;
+  string userList = "\"userlist\":[";
+  for (const auto &[user, messages]: messageMap) {
+    if (not loopOne) userList += ",""\"";
+    userList += "\"name\":";
+    userList += user +"\"";
+    loopOne = false;
+  }
+  result+=userList;
+	result += "]}";
 	return result;
 }
 
