@@ -127,6 +127,17 @@ function startSession(name){
     inthandle=setInterval(fetchMessage,500);
 }
 
+function logout(){
+    fetch(baseUrl+'/chat/logout/'+myname, {
+        method: 'get'
+    })
+    .then (response => response.json() )
+    .then (data => completeFetch(data))
+    .catch(error => {
+        {console.log("Server appears down");}
+    })
+}
+
 function leaveSession(){
     state="off";
     
