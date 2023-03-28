@@ -26,7 +26,7 @@ void addMessage(string username, string message, map<string,vector<string>> &mes
 }
 
 string getMessagesJSON(string username, map<string,vector<string>> &messageMap) {
-	/* retrieve json list of messages for this user */
+	/* retrieve json list of messages for this user along with a userlist*/
 	bool first = true;
 	string result = "{\"messages\":[";
 	for (string message :  messageMap[username]) {
@@ -34,6 +34,14 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap) 
 		result += message;
 		first = false;
 	}
+  bool loopOne = true;
+  string userList = "{\"users\":[";
+  for (const auto &[user, messages]: messageMap) {
+    if (not loopOne) userList += ",";
+    userList += user;
+    loopOne = false;
+  }
+  result+=userList;
 	result += "]}";
 	messageMap[username].clear();
 	return result;
