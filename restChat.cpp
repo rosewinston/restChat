@@ -39,9 +39,9 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap) 
   bool loopOne = true;
   string userList = "\"userlist\":[";
   for (const auto &[user, messages]: messageMap) {
-    if (not loopOne) userList += ",""\"";
-    userList += "\"name\":";
-    userList += user +"\"";
+    if (not loopOne) userList += ",";
+    userList += "{\"name\":""\"";
+    userList += user +"\"}";
     loopOne = false;
   }
   result+=userList;
