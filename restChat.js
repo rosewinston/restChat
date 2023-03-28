@@ -127,12 +127,17 @@ function startSession(name){
     inthandle=setInterval(fetchMessage,500);
 }
 
+function completeLogout(){
+    // something with the userlist and removing the user from the list/moving them to inactive users, 
+    // maybe change the font color of the user on the list?? So one list, green for active grey for inactive?
+}
+
 function logout(){
     fetch(baseUrl+'/chat/logout/'+myname, {
         method: 'get'
     })
     .then (response => response.json() )
-    .then (data => completeFetch(data))
+    .then (data => completeLogout(data))
     .catch(error => {
         {console.log("Server appears down");}
     })
@@ -140,7 +145,7 @@ function logout(){
 
 function leaveSession(){
     state="off";
-    
+    logout();
     document.getElementById('yourname').value = "";
     document.getElementById('register').style.display = 'block';
     document.getElementById('user').innerHTML = "";
