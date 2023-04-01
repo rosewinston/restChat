@@ -86,8 +86,9 @@ int main(void) {
     	// Add user to messages map
         user newUser(username, email, password, color);
         userMap[username]=newUser;
-	result = "{\"status\":\"success\",\"user\":\"" + username + "\",\"" + email + "\",\"" + password + "\",\"" + color + "\""}";
+	result = "{\"status\":\"success\",\"user\":\"" + username + "\",\"" + email + "\",\"" + password + "\",\"" + color + "}\"";
     }
+    
 	  
 	  
 	  
