@@ -21,3 +21,7 @@ user::user(string username, string email, string password, string color){
   this->password = password;
   this->color = color; 
 }
+
+string user::getEmail(){
+  return email;
+}
