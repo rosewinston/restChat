@@ -11,7 +11,7 @@ using namespace std;
 class user {
 public: 
   user(); 
-  user(string username, string email, string password, string color);
+  user(string username, string email, string password, string color, bool active);
   string getEmail(); 
 
   
@@ -20,6 +20,7 @@ private:
   string email; 
   string password; 
   string color; 
+  bool active; 
   
 };
 
