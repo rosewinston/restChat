@@ -13,8 +13,8 @@ public:
   user(); 
   user(string username, string email, string password, string color);
   string getEmail(); 
-  bool emailUnique(map<string, User> userMap);
-  bool nameUnique(map<string, User> userMap);
+  bool emailUnique(map<string, User> userMap, string email);
+  bool nameUnique(map<string, User> userMap, string username);
   
 private: 
   string username;
