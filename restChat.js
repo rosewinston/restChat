@@ -6,6 +6,8 @@ var baseUrl = 'http://44.202.89.194:5005';
 var state="off";
 var myname="";
 var inthandle;
+var masterUserList =[];
+var activeUserList =[];
 
 /* Start with text input and status hidden */
 document.getElementById('chatinput').style.display = 'none';
@@ -45,6 +47,7 @@ function completeJoin(results) {
 	var user = results['user'];
 	console.log("Join:"+user);
 	startSession(user);
+	activateUser(user);
 }
 
 function join() {
@@ -89,14 +92,20 @@ function clearTextbox() {
 }
 
 function completeFetch(result) {
-	messages = result["messages"];
+	names = result["userlist"];
+	names.forEach(function (m,i) {
+		name = m["name"] + ", ";
+		if  (masterUserList.includes(name) == false) {
+		masterUserList += name;
+		}
+    });
+    messages = result["messages"];
 	messages.forEach(function (m,i) {
 		name = m['user'];
-        document.getElementById('members').innerHTML +=
-            "<font color='black'>" + "Rose" + ", ";
 		message = m['message'];
 		document.getElementById('chatBox').innerHTML +=
 	    	"<font color='red'>" + name + ": </font>" + message + "<br />";
+		activateUser(name);
 	});
 }
 
@@ -112,6 +121,28 @@ function fetchMessage() {
     })  	
 }
 
+function updateChatMembers() {
+    var masterUserArray = masterUserList.split(", ");
+	document.getElementById('members').innerHTML = ""
+    masterUserArray.forEach(function (element,i) {
+        var user = element;
+        if (activeUserList.includes(user)) {
+            document.getElementById('members').innerHTML +=
+            "<font color='green'>" + user + " " +"</font> ";
+        }
+        else {
+            document.getElementById('members').innerHTML +=
+            "<font color='grey'>" + user + " " + "</font>";
+        } 
+    });
+}
+
+function activateUser(name) {
+    if (activeUserList.includes(name) == false) {
+        activeUserList.push(name);
+    }
+}
+
 /* Functions to set up visibility of sections of the display */
 function startSession(name){
     state="on";
@@ -125,11 +156,11 @@ function startSession(name){
     document.getElementById('leave').style.display = 'block';
     /* Check for messages every 500 ms */
     inthandle=setInterval(fetchMessage,500);
+    inthandle=setInterval(updateChatMembers,1000);
 }
 
-function completeLogout(){
-    // something with the userlist and removing the user from the list/moving them to inactive users, 
-    // maybe change the font color of the user on the list?? So one list, green for active grey for inactive?
+function completeLogout(user){
+   // something to remove the user from the ActiveUsers list/array but not just client side
 }
 
 function logout(){
@@ -141,6 +172,7 @@ function logout(){
     .catch(error => {
         {console.log("Server appears down");}
     })
+	completeLogout(myname);
 }
 
 function leaveSession(){
@@ -155,5 +187,3 @@ function leaveSession(){
     document.getElementById('leave').style.display = 'none';
 	clearInterval(inthandle);
 }
-
-
