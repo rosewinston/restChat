@@ -36,11 +36,38 @@ document.getElementById('message').addEventListener("keydown", (e)=> {
 // Call function on page exit
 window.onbeforeunload = leaveSession;
 
+function register() {
+    username = document.getElementById('register-name');
+    email = document.getElementById('register-email');
+    password = document.getElementById('register-pass');
+    color = document.getElementById('register-color');
+    fetch(baseUrl+'/chat/join/'+username+'/'+email+'/'+password+'/'+color, {
+        method: 'get'
+    })
+    .then (response => response.json() )
+    .then (data =>completeRegister(data))
+    .catch(error => {
+        {alert("Error: Something went wrong:"+error);}
+    })
+}
+
+function completeRegister(results) {
+	var status = results['status'];
+	if (status != "success") {
+		alert("Username or email already exists!");
+		leaveSession();
+		return;
+	}
+	var user = results['user'];
+	console.log("Register:"+user);
+	startSession(user);
+	activateUser(user);
+}
 
 function completeJoin(results) {
 	var status = results['status'];
 	if (status != "success") {
-		alert("Username already exists!");
+		alert("Username or email already exists!");
 		leaveSession();
 		return;
 	}

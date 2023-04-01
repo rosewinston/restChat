@@ -11,6 +11,7 @@
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <link rel="stylesheet" type="text/css" href="restChat.css">
       <!-- Custom styles for this template -->
+      <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
    </head>
    <body>
    <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -85,25 +86,27 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="orangeForm-name" class="form-control validate">
+          <input type="text" id="register-name" class="form-control validate">
           <label data-error="wrong" data-success="right" for="orangeForm-name">Your name</label>
         </div>
         <div class="md-form mb-5">
           <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="orangeForm-email" class="form-control validate">
+          <input type="email" id="register-email" class="form-control validate">
           <label data-error="wrong" data-success="right" for="orangeForm-email">Your email</label>
         </div>
-
-        <div class="md-form mb-4">
+        <div class="md-form mb-5">
           <i class="fas fa-lock prefix grey-text"></i>
-          <input type="password" id="orangeForm-pass" class="form-control validate">
+          <input type="password" id="register-pass" class="form-control validate" placeholder="(must be 6 characters or more)">
           <label data-error="wrong" data-success="right" for="orangeForm-pass">Your password</label>
         </div>
-
+        <div class="md-form mb-5">
+          <label for="favcolor">Select your favorite color:</label>
+          <input type="color" id="register-color" name="favcolor" value="#ff0000">
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <div class="modal-footer mb-4">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" placeholder="Must be 6 characters or greater">Close</button>
+        <button type="button" class="btn btn-primary">Register User</button>
       </div>
     </div>
   </div>
