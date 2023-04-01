@@ -12,6 +12,7 @@ class user {
 public: 
   user(); 
   user(string username, string email, string password, string color);
+  string getEmail(); 
   
 private: 
   string username;
