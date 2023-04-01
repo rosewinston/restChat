@@ -67,33 +67,26 @@ int main(void) {
   svr.Get(R"(/chat/join/(.*)/(.*)/(.*)/(.*))", [&](const Request& req, Response& res) {
     res.set_header("Access-Control-Allow-Origin","*");
     string username = req.matches[1];
-    string email = reg.matches[2];
-    string password = reg.matches[3];
-    string color = reg.matches[4];
+    string email = req.matches[2];
+    string password = req.matches[3];
+    string color = req.matches[4];
+    bool active = true;
     string result;
     bool emailUnique = true;
-     
     for (auto pair : userMap){
 	   if (email == pair.second.getEmail()){
 		   emailUnique = false;
 	   } 
     }
-    
-	  
     if (userMap.count(username) || !emailUnique) {
     	result = "{\"status\":\"exists\"}";
     } else {
     	// Add user to messages map
-        user newUser(username, email, password, color);
+        user newUser(username, email, password, color, active);
         userMap[username]=newUser;
 	result = "{\"status\":\"success\",\"user\":\"" + username + "\",\"" + email + "\",\"" + password + "\",\"" + color + "}\"";
     }
-    
-	  
-	  
-	  
-    }
-	  
+  });
   svr.Get(R"(/chat/join/(.*))", [&](const Request& req, Response& res) {
     res.set_header("Access-Control-Allow-Origin","*");
     string username = req.matches[1];
@@ -132,10 +125,9 @@ int main(void) {
     string username = req.matches[1];
     res.set_header("Access-Control-Allow-Origin","*");
     string resultJSON = getMessagesJSON(username,messageMap);
-    res.set_content(resultJSON, "text/json");
-  });
-  
-  cout << "Server listening on port " << port << endl;
+    res.set_content(resultJSON, "text/json");  
+    cout << "Server listening on port " << port << endl;
+    });
   svr.Get(R"(/chat/hello/(.*))", [&](const Request& req, Response& res) {
     string name = req.matches[1];
     res.set_header("Access-Control-Allow-Origin","*");
