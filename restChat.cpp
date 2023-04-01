@@ -55,7 +55,8 @@ int main(void) {
   int nextUser=0;
   map<string,vector<string>> messageMap;
 	vector<string> userList;
-
+  map<string, user> userMap;
+	
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
     res.set_header("Access-Control-Allow-Origin","*");
@@ -70,10 +71,26 @@ int main(void) {
     string password = reg.matches[3];
     string color = reg.matches[4];
     string result;
-    map<string, User> userMap;
-    user newUser(username, email, password, color);
-    userMap[username]=newUser;
-    result = "{\"status\":\"success\",\"user\":\"" + username + "\",\"" + email + "\",\"" + password + "\",\"" + color + "\""}";
+    bool emailUnique = true;
+     
+    for (auto pair : userMap){
+	   if (email == pair.second.getEmail()){
+		   emailUnique = false;
+	   } 
+    }
+    
+	  
+    if (userMap.count(username) || !emailUnique) {
+    	result = "{\"status\":\"exists\"}";
+    } else {
+    	// Add user to messages map
+        user newUser(username, email, password, color);
+        userMap[username]=newUser;
+	result = "{\"status\":\"success\",\"user\":\"" + username + "\",\"" + email + "\",\"" + password + "\",\"" + color + "\""}";
+    }
+	  
+	  
+	  
     }
 	  
   svr.Get(R"(/chat/join/(.*))", [&](const Request& req, Response& res) {
