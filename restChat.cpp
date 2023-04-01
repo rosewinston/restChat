@@ -73,7 +73,7 @@ int main(void) {
     map<string, User> userMap;
     user newUser(username, email, password, color);
     userMap[username]=newUser;
-    result = "{\"status\":\"success\",\"user\":\"" + username + "\",\"" + email + "\",\"" + password + "\","" + color + "\""}";
+    result = "{\"status\":\"success\",\"user\":\"" + username + "\",\"" + email + "\",\"" + password + "\",\"" + color + "\""}";
     }
 	  
   svr.Get(R"(/chat/join/(.*))", [&](const Request& req, Response& res) {
