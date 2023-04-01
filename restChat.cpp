@@ -63,6 +63,15 @@ int main(void) {
   });
 
 
+  svr.Get(R"(/chat/join/(.*)/(.*)/(.*)/(.*))", [&](const Request& req, Response& res) {
+    res.set_header("Access-Control-Allow-Origin","*");
+    string username = req.matches[1];
+    string email = reg.matches[2];
+    string password = reg.matches[3];
+    string color = reg.matches[4];
+    string result;
+    map<string, User> userMap;
+	  
   svr.Get(R"(/chat/join/(.*))", [&](const Request& req, Response& res) {
     res.set_header("Access-Control-Allow-Origin","*");
     string username = req.matches[1];
