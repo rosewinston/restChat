@@ -10,6 +10,7 @@
 #include <map>
 #include <algorithm>
 #include "httplib.h"
+#include "user.h"
 
 using namespace httplib;
 using namespace std;
