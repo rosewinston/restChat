@@ -12,12 +12,12 @@ using namespace std;
 class user {
 public: 
   user(); 
-  user(string username, string password, string email, string color);
+  user(string username, string email, string password, string color);
   
 private: 
   string username;
-  string password; 
   string email; 
+  string password; 
   string color; 
   
 };
