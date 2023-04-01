@@ -26,19 +26,4 @@ string user::getEmail(){
   return email;
 }
 
-bool emailUnique(map<string, user> userMap, string email){
-  for (auto pair : userMap){
-      if (email==pair.second.getEmail()){
-        return false;
-      }
-  }
-  return true; 
-}
 
-bool nameUnique(map<string, user> userMap, string username){
-  if (userMap.count(username)){
-    return true; 
-  }else{
-    return false;
-  }
-}
