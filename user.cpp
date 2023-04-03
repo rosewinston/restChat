@@ -33,7 +33,7 @@ string user::getPassword(){
 }
 
 void user::setActive(bool status){
-  active = setActive;
+  active = status;
 }
 
 bool user::getActive(){
