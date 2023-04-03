@@ -37,15 +37,30 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap) 
 	}
   result += "],";
   messageMap[username].clear();
-  bool loopOne = true;
+  first = true;
   string userList = "\"userlist\":[";
-  for (const auto &[user, messages]: messageMap) {
-    if (not loopOne) userList += ",";
+  for (int i=0; i<masterUserList.length(); i++) {
+    if (not first) userList += ",";
+	user = masterUserList[i];
     userList += "{\"name\":""\"";
     userList += user +"\"}";
-    loopOne = false;
+    first = false;
   }
+  result+= "],";
   result+=userList;
+  string activeList = "\"activelist\":[";
+  for (auto pair : userMap){
+	if (pair.second.getActive()) {
+		activeUserList+=pair.first;
+	}
+  }
+  first = true;
+  for (int i=0; i<activeUserList.length(); i++) {
+	  if (not first) activerUserList += ",";
+	  user = activeUserList[i];
+	  activeList += "{\"name\":""\"";
+	  activeList += user +"\"}";
+  }
 	result += "]}";
 	return result;
 }
@@ -54,7 +69,8 @@ int main(void) {
   Server svr;
   int nextUser=0;
   map<string,vector<string>> messageMap;
-	vector<string> userList;
+	vector<string> masterUserList;
+	vector<string> activeUserList;
   map<string, user> userMap;
 	
   /* "/" just returnsAPI name */
@@ -88,7 +104,7 @@ int main(void) {
         user newUser(username, email, password, color, active);
         cout << "user created" << endl;
         userMap[username]=newUser;
-        userList.push_back(username);
+        masterUserList.push_back(username);
 	result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
     }
 	res.set_content(result, "text/json");
@@ -105,7 +121,8 @@ int main(void) {
     if (userMap.count(username)) {
       if (password==userMap[username].getPassword()) {
         messageMap[username]=empty;
-    	  result = "{\"status\":\"success\",\"user\":\"" + username + "\"}";
+		result = "{\"status\":\"success\",\"user\":\"" + username + "\"}";
+		activeUserList+=username;
       }
     }
     else {

@@ -87,7 +87,8 @@ function completeJoin(results) {
 
 function join() {
 	myname = document.getElementById('yourname').value;
-	fetch(baseUrl+'/chat/join/'+myname, {
+	mypassword = document.getElementById('yourpass').value;
+	fetch(baseUrl+'/chat/join/'+myname+'/'+mypassword, {
         method: 'get'
     })
     .then (response => response.json() )
