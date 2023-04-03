@@ -14,6 +14,8 @@ public:
   user(string username, string email, string password, string color, bool active);
   string getEmail(); 
   string getPassword();
+  bool setActive(bool status);
+  bool getActive();
 
   
 private: 
