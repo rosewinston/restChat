@@ -72,22 +72,25 @@ int main(void) {
     string color = req.matches[4];
     bool active = true;
     string result;
-    cout << username << " joins" << endl;
+    cout << username << email << password << color << endl;
     bool emailUnique = true;
     for (auto pair : userMap){
 	   if (email == pair.second.getEmail()){
 		   emailUnique = false;
+       cout << "email not unique" << endl;
 	   } 
     }
     if (userMap.count(username) || !emailUnique) {
-    	result = "{\"status\":\"exists\"}";
+    	cout << "exists" << endl;
+      result = "{\"status\":\"exists\"}";
     } else {
     	// Add user to messages map
         user newUser(username, email, password, color, active);
+        cout << "user created" << endl;
         userMap[username]=newUser;
 	result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
-  cout << result;
     }
+	res.set_content(result, "text/json");
   });
   svr.Get(R"(/chat/join/(.*))", [&](const Request& req, Response& res) {
     res.set_header("Access-Control-Allow-Origin","*");

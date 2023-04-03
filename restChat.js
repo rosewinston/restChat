@@ -49,6 +49,7 @@ function register() {
     email = document.getElementById('register-email').value;
     password = document.getElementById('register-pass').value;
     color = document.getElementById('register-color').value;
+	console.log(color);
     console.log("registration start");
 fetch(baseUrl+'/chat/register/'+username+'/'+email+'/'+password+'/'+color, {
         method: 'get'
@@ -69,8 +70,6 @@ function completeRegister(results) {
 	}
 	var user = results['user'];
 	console.log("Register:"+user);
-	startSession(user);
-	activateUser(user);
 }
 
 function completeJoin(results) {
