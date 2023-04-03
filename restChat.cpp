@@ -126,7 +126,6 @@ int main(void) {
     res.set_header("Access-Control-Allow-Origin","*");
     string resultJSON = getMessagesJSON(username,messageMap);
     res.set_content(resultJSON, "text/json");  
-    cout << "Server listening on port " << port << endl;
     });
   svr.Get(R"(/chat/hello/(.*))", [&](const Request& req, Response& res) {
     string name = req.matches[1];
@@ -140,6 +139,8 @@ int main(void) {
     res.set_header("Access-Control-Allow-Origin","*");
     string resultJSON = "{\"status\":\"success\",\"name\":\""+name+"\"logged out\"}"; 
   });
+
+  cout << "Server listening on port " << port << endl;
   svr.listen("0.0.0.0", port);
 
 }
