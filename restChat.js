@@ -44,7 +44,8 @@ function register() {
     email = document.getElementById('register-email');
     password = document.getElementById('register-pass');
     color = document.getElementById('register-color');
-    fetch(baseUrl+'/chat/join/'+username+'/'+email+'/'+password+'/'+color, {
+    console.log("registration start");
+fetch(baseUrl+'/chat/register/'+username+'/'+email+'/'+password+'/'+color, {
         method: 'get'
     })
     .then (response => response.json() )
