@@ -13,6 +13,7 @@ public:
   user(); 
   user(string username, string email, string password, string color, bool active);
   string getEmail(); 
+  string getPassword();
 
   
 private: 
