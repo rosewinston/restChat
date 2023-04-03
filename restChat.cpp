@@ -92,14 +92,21 @@ int main(void) {
     }
 	res.set_content(result, "text/json");
   });
-  svr.Get(R"(/chat/join/(.*))", [&](const Request& req, Response& res) {
+  svr.Get(R"(/chat/join/(.*)/(.*))", [&](const Request& req, Response& res) {
     res.set_header("Access-Control-Allow-Origin","*");
     string username = req.matches[1];
+    string password = req.matches[2];
     string result;
     vector<string> empty;
     cout << username << " joins" << endl;
     
-    // Check if user with this name exists
+    // Check if username and password matches with registered user
+    if (userMap.count(username)) {
+      if (password==userMap[username].getPassword()) {
+        //add user to the thing
+      }
+    }
+
     if (messageMap.count(username)) { 
     	result = "{\"status\":\"exists\"}";
     } else {
