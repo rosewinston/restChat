@@ -88,6 +88,7 @@ int main(void) {
         user newUser(username, email, password, color, active);
         cout << "user created" << endl;
         userMap[username]=newUser;
+        userList.push_back(username);
 	result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
     }
 	res.set_content(result, "text/json");
@@ -103,17 +104,12 @@ int main(void) {
     // Check if username and password matches with registered user
     if (userMap.count(username)) {
       if (password==userMap[username].getPassword()) {
-        //add user to the thing
+        messageMap[username]=empty;
+    	  result = "{\"status\":\"success\",\"user\":\"" + username + "\"}";
       }
     }
-
-    if (messageMap.count(username)) { 
-    	result = "{\"status\":\"exists\"}";
-    } else {
-    	// Add user to messages map
-      userList.push_back(username);
-    	messageMap[username]=empty;
-    	result = "{\"status\":\"success\",\"user\":\"" + username + "\"}";
+    else {
+      result = "{\"status\":\"exists\"}";
     }
     res.set_content(result, "text/json");
   });
