@@ -1,11 +1,11 @@
-//#include <iostream>
-//#include <fstream> 
-//#include <map>
-//#include <algorithm>
+#include <iostream>
+#include <fstream> 
+#include <map>
+#include <algorithm>
 
 
 #include "user.h" 
-//using namespace std; 
+using namespace std; 
 
 user::user(){
   username = "";
