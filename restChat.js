@@ -17,7 +17,10 @@ document.getElementById('leave').style.display = 'none';
 document.getElementById('login-btn').addEventListener("click", (e) => {
 	join();
 })
-
+// Action if they push the register button
+document.getElementById('register-btn').addEventListener("click", (e) => {
+    register();
+})
 /* Set up buttons */
 document.getElementById('leave-btn').addEventListener("click", leaveSession);
 document.getElementById('send-btn').addEventListener("click", sendText);
