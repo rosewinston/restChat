@@ -28,6 +28,6 @@ string user::getEmail(){
   return email;
 }
 
-string user:: getPassword(){
+string user::getPassword(){
   return password;
 }
