@@ -32,7 +32,7 @@ string user::getPassword(){
   return password;
 }
 
-void user::setActive(bool setActive){
+void user::setActive(bool status){
   active = setActive;
 }
 
