@@ -75,7 +75,7 @@ function completeRegister(results) {
 function completeJoin(results) {
 	var status = results['status'];
 	if (status != "success") {
-		alert("Username or email already exists!");
+		alert("User already exists");
 		leaveSession();
 		return;
 	}
@@ -132,7 +132,7 @@ function completeFetch(result) {
 	names.forEach(function (m,i) {
 		name = m["name"] + ", ";
 		if  (masterUserList.includes(name) == false) {
-		masterUserList += name;
+		masterUserList.push(name);
 		}
     });
     messages = result["messages"];
@@ -158,9 +158,8 @@ function fetchMessage() {
 }
 
 function updateChatMembers() {
-    var masterUserArray = masterUserList.split(", ");
 	document.getElementById('members').innerHTML = ""
-    masterUserArray.forEach(function (element,i) {
+    masterUserList.forEach(function (element,i) {
         var user = element;
         if (activeUserList.includes(user)) {
             document.getElementById('members').innerHTML +=

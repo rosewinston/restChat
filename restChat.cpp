@@ -26,9 +26,10 @@ void addMessage(string username, string message, map<string,vector<string>> &mes
 	}
 }
 
-string getMessagesJSON(string username, map<string,vector<string>> &messageMap) {
+string getMessagesJSON(string username, map<string,vector<string>> &messageMap,vector<string> &masterUserList,vector<string> &activeUserList, map<string,user> &userMap) {
 	/* retrieve json list of messages for this user along with a userlist*/
 	bool first = true;
+	string user;
 	string result = "{\"messages\":[";
 	for (string message :  messageMap[username]) {
 		if (not first) result += ",";
@@ -39,7 +40,7 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap) 
   messageMap[username].clear();
   first = true;
   string userList = "\"userlist\":[";
-  for (int i=0; i<masterUserList.length(); i++) {
+  for (int i=0; i<masterUserList.size(); i++) {
     if (not first) userList += ",";
 	user = masterUserList[i];
     userList += "{\"name\":""\"";
@@ -51,12 +52,12 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap) 
   string activeList = "\"activelist\":[";
   for (auto pair : userMap){
 	if (pair.second.getActive()) {
-		activeUserList+=pair.first;
+		activeUserList.push_back(pair.first);
 	}
   }
   first = true;
-  for (int i=0; i<activeUserList.length(); i++) {
-	  if (not first) activerUserList += ",";
+  for (int i=0; i<activeUserList.size(); i++) {
+	  if (not first) activeList += ",";
 	  user = activeUserList[i];
 	  activeList += "{\"name\":""\"";
 	  activeList += user +"\"}";
@@ -69,8 +70,8 @@ int main(void) {
   Server svr;
   int nextUser=0;
   map<string,vector<string>> messageMap;
-	vector<string> masterUserList;
-	vector<string> activeUserList;
+  vector<string> masterUserList;
+  vector<string> activeUserList;
   map<string, user> userMap;
 	
   /* "/" just returnsAPI name */
@@ -122,7 +123,7 @@ int main(void) {
       if (password==userMap[username].getPassword()) {
         messageMap[username]=empty;
 		result = "{\"status\":\"success\",\"user\":\"" + username + "\"}";
-		activeUserList+=username;
+		activeUserList.push_back(username);
       }
     }
     else {
@@ -149,7 +150,7 @@ int main(void) {
    svr.Get(R"(/chat/fetch/(.*))", [&](const Request& req, Response& res) {
     string username = req.matches[1];
     res.set_header("Access-Control-Allow-Origin","*");
-    string resultJSON = getMessagesJSON(username,messageMap);
+    string resultJSON = getMessagesJSON(username,messageMap,masterUserList,activeUserList,userMap);
     res.set_content(resultJSON, "text/json");  
     });
   svr.Get(R"(/chat/hello/(.*))", [&](const Request& req, Response& res) {
