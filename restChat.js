@@ -5,6 +5,11 @@
 var baseUrl = 'http://44.202.89.194:5005';
 var state="off";
 var myname="";
+var email="";
+var password="";
+var color="";
+var username="";
+
 var inthandle;
 var masterUserList =[];
 var activeUserList =[];
@@ -40,10 +45,10 @@ document.getElementById('message').addEventListener("keydown", (e)=> {
 window.onbeforeunload = leaveSession;
 
 function register() {
-    username = document.getElementById('register-name');
-    email = document.getElementById('register-email');
-    password = document.getElementById('register-pass');
-    color = document.getElementById('register-color');
+    username = document.getElementById('register-name').value;
+    email = document.getElementById('register-email').value;
+    password = document.getElementById('register-pass').value;
+    color = document.getElementById('register-color').value;
     console.log("registration start");
 fetch(baseUrl+'/chat/register/'+username+'/'+email+'/'+password+'/'+color, {
         method: 'get'

@@ -72,6 +72,7 @@ int main(void) {
     string color = req.matches[4];
     bool active = true;
     string result;
+    cout << username << " joins" << endl;
     bool emailUnique = true;
     for (auto pair : userMap){
 	   if (email == pair.second.getEmail()){
@@ -84,7 +85,8 @@ int main(void) {
     	// Add user to messages map
         user newUser(username, email, password, color, active);
         userMap[username]=newUser;
-	result = "{\"status\":\"success\",\"user\":\"" + username + "\",\"" + email + "\",\"" + password + "\",\"" + color + "}\"";
+	result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
+  cout << result;
     }
   });
   svr.Get(R"(/chat/join/(.*))", [&](const Request& req, Response& res) {
