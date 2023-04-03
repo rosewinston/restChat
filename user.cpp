@@ -31,3 +31,11 @@ string user::getEmail(){
 string user::getPassword(){
   return password;
 }
+
+void user::setActive(bool status){
+  active = status;
+}
+
+bool user::getActive(){
+  return active;
+}
