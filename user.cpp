@@ -12,7 +12,7 @@ user::user(){
   email = "";
   password = "";
   color = "";
-  active; 
+  active = true; 
   
 }
 
