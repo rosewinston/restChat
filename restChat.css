@@ -17,10 +17,11 @@ h2, h3, p {
 
 /* Scroll Box attributes */
 .scrollabletextbox {
-    background-color: #e6b3ff;
+    background-color: #464646;
     height: 300px;
     width: 400px;
     font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
     font-size: 82%;
+    color:white;
     overflow:scroll;
 }

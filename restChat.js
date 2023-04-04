@@ -181,7 +181,7 @@ function updateChatMembers() {
         }
         else {
             document.getElementById('members').innerHTML +=
-            "<font color='grey'>" + user + " " + "</font>";
+            "<font color='#ff0000'>" + user + " " + "</font>";
         } 
     });
 }
