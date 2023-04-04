@@ -7,7 +7,9 @@
 
 using namespace std; 
 
+// default constructor for the "user" class. 
 user::user(){
+  // Initializes the member variables to empty strings
   username = "";
   email = "";
   password = "";
@@ -16,6 +18,8 @@ user::user(){
   
 }
 
+// initializes the member variables (username, email, password, color) with the corresponding argument values,
+// and "active" as "true".
 user::user(string username, string email, string password, string color, bool active){
   this->username = username; 
   this->email = email;
@@ -24,6 +28,7 @@ user::user(string username, string email, string password, string color, bool ac
   this->active = true;
 }
 
+// The followings return the email, password, active status, and color of the user, respectively.
 string user::getEmail(){
   return email;
 }
