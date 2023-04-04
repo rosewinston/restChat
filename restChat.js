@@ -135,12 +135,20 @@ function completeFetch(result) {
 		masterUserList.push(name);
 		}
     });
+	activeusers = result["activelist"];
+	activeusers.forEach(function (m,i) {
+		user = m["name"] + ", ";
+		if (activeUserList.includes(user) == false) {
+			activeUserList.push(user);
+		}
+	});
     messages = result["messages"];
 	messages.forEach(function (m,i) {
 		name = m['user'];
 		message = m['message'];
+		color = m['color'];
 		document.getElementById('chatBox').innerHTML +=
-	    	"<font color='red'>" + name + ": </font>" + message + "<br />";
+	    	"<font color="+color+">" + name + ": </font>" + message + "<br />";
 		activateUser(name);
 	});
 }

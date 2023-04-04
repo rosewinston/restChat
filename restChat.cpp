@@ -36,23 +36,24 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 		result += message;
 		first = false;
 	}
-  result += "],";
+	result+="],";
   messageMap[username].clear();
   first = true;
-  string userList = "\"userlist\":[";
+  result += "\"userlist\":[";
   for (int i=0; i<masterUserList.size(); i++) {
-    if (not first) userList += ",";
+    if (not first) result += ",";
 	user = masterUserList[i];
-    userList += "{\"name\":""\"";
-    userList += user +"\"}";
+    result += "{\"name\":""\"";
+    result += user +"\"}";
     first = false;
   }
   result+= "],";
-  result+=userList;
   string activeList = "\"activelist\":[";
   for (auto pair : userMap){
-	if (pair.second.getActive()) {
+	string activeuser = pair.first;
+	if (pair.second.getActive() && find(activeUserList.begin(),activeUserList.end(), activeuser) == activeUserList.end()) {
 		activeUserList.push_back(pair.first);
+		cout << pair.first << " added!";
 	}
   }
   first = true;
@@ -61,7 +62,9 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 	  user = activeUserList[i];
 	  activeList += "{\"name\":""\"";
 	  activeList += user +"\"}";
+	  first = false;
   }
+	result+=activeList;
 	result += "]}";
 	return result;
 }
@@ -123,7 +126,6 @@ int main(void) {
       if (password==userMap[username].getPassword()) {
         messageMap[username]=empty;
 		result = "{\"status\":\"success\",\"user\":\"" + username + "\"}";
-		activeUserList.push_back(username);
       }
     }
     else {
