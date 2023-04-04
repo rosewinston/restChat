@@ -44,6 +44,7 @@ document.getElementById('message').addEventListener("keydown", (e)=> {
 // Call function on page exit
 window.onbeforeunload = leaveSession;
 
+// Registers a new user by sending their information to the server
 function register() {
     username = document.getElementById('register-name').value;
     email = document.getElementById('register-email').value;
@@ -61,6 +62,7 @@ fetch(baseUrl+'/chat/register/'+username+'/'+email+'/'+password+'/'+color, {
     })
 }
 
+// Handle the registration response from the server. Only registers if there exists no overlapping username/email.
 function completeRegister(results) {
 	var status = results['status'];
 	if (status != "success") {
@@ -72,6 +74,7 @@ function completeRegister(results) {
 	console.log("Register:"+user);
 }
 
+// Handle the response after attempting to join the chat
 function completeJoin(results) {
 	var status = results['status'];
 	if (status != "success") {
@@ -84,6 +87,7 @@ function completeJoin(results) {
 	startSession(user);
 }
 
+// Joins the chat by sending the username and password to the server
 function join() {
 	myname = document.getElementById('yourname').value;
 	mypassword = document.getElementById('yourpass').value;
@@ -122,10 +126,12 @@ function sendText() {
     clearTextbox();    
 }
 
+// Clears up the textbox once the message is sent
 function clearTextbox() {
     document.getElementById('message').value = "";
 }
 
+// Process the messages and user list
 function completeFetch(result) {
 	names = result["userlist"];
 	names.forEach(function (m,i) {
@@ -164,6 +170,7 @@ function fetchMessage() {
     })  	
 }
 
+// Update the list of chat members
 function updateChatMembers() {
 	document.getElementById('members').innerHTML = ""
     masterUserList.forEach(function (element,i) {
@@ -203,6 +210,7 @@ var status = result['status'];
 	}
 }
 
+// Logs out the current user from the chat
 function logout(){
     fetch(baseUrl+'/chat/logout/'+myname, {
         method: 'get'
@@ -214,6 +222,7 @@ function logout(){
     })
 }
 
+// Handle leaving the chat session and the features following, such as hiding elements and stopping sending messages
 function leaveSession(){
 	logout();
 	state="off";
