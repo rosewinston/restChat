@@ -48,8 +48,8 @@ function register() {
     username = document.getElementById('register-name').value;
     email = document.getElementById('register-email').value;
     password = document.getElementById('register-pass').value;
-    color = document.getElementById('register-color').value;
-	console.log(color);
+    var temp = document.getElementById("userColor").value;
+	color = temp.slice(1);
     console.log("registration start");
 fetch(baseUrl+'/chat/register/'+username+'/'+email+'/'+password+'/'+color, {
         method: 'get'

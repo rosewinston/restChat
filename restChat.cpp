@@ -17,9 +17,9 @@ using namespace std;
 
 const int port = 5005;
 
-void addMessage(string username, string message, map<string,vector<string>> &messageMap) {
+void addMessage(string username, string message, map<string,vector<string>> &messageMap, string color) {
 	/* iterate through users adding message to each */
-	string jsonMessage = "{\"user\":\""+username+"\",\"message\":\""+message+"\"}";
+	string jsonMessage = "{\"user\":\""+username+"\",\"message\":\""+message+"\",\"color\":\""+color+"\"}";
 	for (auto userMessagePair : messageMap) {
 		username = userMessagePair.first;
 		messageMap[username].push_back(jsonMessage);
@@ -143,7 +143,8 @@ int main(void) {
     if (!messageMap.count(username)) {
     	result = "{\"status\":\"baduser\"}";
 	} else {
-		addMessage(username,message,messageMap);
+		string userColor = userMap[username].getColor();
+		addMessage(username,message,messageMap,userColor);
 		result = "{\"status\":\"success\"}";
 	}
     res.set_content(result, "text/json");

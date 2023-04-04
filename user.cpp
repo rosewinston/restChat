@@ -39,3 +39,8 @@ void user::setActive(bool status){
 bool user::getActive(){
   return active;
 }
+
+string user::getColor() {
+	return color;
+}
+

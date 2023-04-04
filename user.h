@@ -16,6 +16,7 @@ public:
   string getPassword();
   void setActive(bool status);
   bool getActive();
+  string getColor();
 
   
 private: 
