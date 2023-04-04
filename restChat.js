@@ -82,7 +82,6 @@ function completeJoin(results) {
 	var user = results['user'];
 	console.log("Join:"+user);
 	startSession(user);
-	activateUser(user);
 }
 
 function join() {
@@ -135,12 +134,12 @@ function completeFetch(result) {
 		masterUserList.push(name);
 		}
     });
+	activeUserList=[];
 	activeusers = result["activelist"];
 	activeusers.forEach(function (m,i) {
 		user = m["name"] + ", ";
-		if (activeUserList.includes(user) == false) {
-			activeUserList.push(user);
-		}
+		activeUserList.push(user);
+		
 	});
     messages = result["messages"];
 	messages.forEach(function (m,i) {
@@ -149,8 +148,8 @@ function completeFetch(result) {
 		color = m['color'];
 		document.getElementById('chatBox').innerHTML +=
 	    	"<font color="+color+">" + name + ": </font>" + message + "<br />";
-		activateUser(name);
 	});
+	updateChatMembers();
 }
 
 /* Check for new messaged */
@@ -179,13 +178,6 @@ function updateChatMembers() {
         } 
     });
 }
-
-function activateUser(name) {
-    if (activeUserList.includes(name) == false) {
-        activeUserList.push(name);
-    }
-}
-
 /* Functions to set up visibility of sections of the display */
 function startSession(name){
     state="on";
@@ -199,11 +191,16 @@ function startSession(name){
     document.getElementById('leave').style.display = 'block';
     /* Check for messages every 500 ms */
     inthandle=setInterval(fetchMessage,500);
-    inthandle=setInterval(updateChatMembers,1000);
 }
 
-function completeLogout(user){
+function completeLogout(result){
    // something to remove the user from the ActiveUsers list/array but not just client side
+var status = result['status'];
+	if (status == "success") {
+		console.log("Logout successful")
+	} else {
+		alert("Error logging out!");
+	}
 }
 
 function logout(){
@@ -215,12 +212,11 @@ function logout(){
     .catch(error => {
         {console.log("Server appears down");}
     })
-	completeLogout(myname);
 }
 
 function leaveSession(){
-    state="off";
-    logout();
+	logout();
+	state="off";
     document.getElementById('yourname').value = "";
     document.getElementById('register').style.display = 'block';
     document.getElementById('user').innerHTML = "";

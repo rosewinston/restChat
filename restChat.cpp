@@ -53,7 +53,6 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 	string activeuser = pair.first;
 	if (pair.second.getActive() && find(activeUserList.begin(),activeUserList.end(), activeuser) == activeUserList.end()) {
 		activeUserList.push_back(pair.first);
-		cout << pair.first << " added!";
 	}
   }
   first = true;
@@ -64,6 +63,7 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 	  activeList += user +"\"}";
 	  first = false;
   }
+	activeUserList.clear();
 	result+=activeList;
 	result += "]}";
 	return result;
@@ -131,6 +131,7 @@ int main(void) {
     else {
       result = "{\"status\":\"exists\"}";
     }
+	userMap[username].setActive(true);
     res.set_content(result, "text/json");
   });
 
@@ -156,6 +157,7 @@ int main(void) {
     string resultJSON = getMessagesJSON(username,messageMap,masterUserList,activeUserList,userMap);
     res.set_content(resultJSON, "text/json");  
     });
+
   svr.Get(R"(/chat/hello/(.*))", [&](const Request& req, Response& res) {
     string name = req.matches[1];
     res.set_header("Access-Control-Allow-Origin","*");
@@ -166,7 +168,9 @@ int main(void) {
   svr.Get(R"(/chat/logout/(.*))", [&](const Request& req, Response& res) {
     string name = req.matches[1];
     res.set_header("Access-Control-Allow-Origin","*");
-    string resultJSON = "{\"status\":\"success\",\"name\":\""+name+"\"logged out\"}"; 
+	userMap[name].setActive(false);
+    string resultJSON = "{\"status\":\"success\",\"name\":\""+name+"\"}"; 
+	res.set_content(resultJSON, "text/json");
   });
 
   cout << "Server listening on port " << port << endl;
