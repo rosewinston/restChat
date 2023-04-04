@@ -8,10 +8,14 @@
 using namespace std; 
 
 
+// Defines the "user" class
 class user {
 public: 
+  // default constructor
   user(); 
-  user(string username, string email, string password, string color, bool active);
+  // called when an object of the "user" is created with the specific arguments (username, email, password, color, active)
+  user(string username, string email, string password, string color, bool active); 
+  // each of the followings returns the email, password, active status, and the color of the user, respectively.
   string getEmail(); 
   string getPassword();
   void setActive(bool status);
@@ -20,6 +24,7 @@ public:
 
   
 private: 
+  // creates variables that stores the username, email, password, color, and active status of the user, respectively.
   string username;
   string email; 
   string password; 
