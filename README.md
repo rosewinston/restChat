@@ -22,4 +22,4 @@ A REST based web chat program using C++
  - ```make```
  - ```./restChat```
 
-## Go to your VM URL/namesCpp/namelookup.html
+## Go to your VM URL/namesCpp/restChat.html
