@@ -43,8 +43,7 @@ document.getElementById('message').addEventListener("keydown", (e)=> {
 
 // function for toggling the css on the page between light and dark mode.
 function toggleMode() {
-    var element = document.getElementById('body');
-    element.classList.toggle("dark-mode");
+	document.getElementById('chatBox').classList.toggle('dark-mode-chatbox');
 }
 
 // Call function on page exit
