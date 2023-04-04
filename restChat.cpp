@@ -17,6 +17,9 @@ using namespace std;
 
 const int port = 5005;
 
+// Takes a username, message, message map, color
+// and constructs a JSON-formatted string containing the user's information and the message,
+// and then this JSON string to the message list of all users in the message map.
 void addMessage(string username, string message, map<string,vector<string>> &messageMap, string color) {
 	/* iterate through users adding message to each */
 	string jsonMessage = "{\"user\":\""+username+"\",\"message\":\""+message+"\",\"color\":\""+color+"\"}";
@@ -26,6 +29,8 @@ void addMessage(string username, string message, map<string,vector<string>> &mes
 	}
 }
 
+// Takes a username, message map, masterUserList, activeUserList, and user map
+// Returns a JSON-formatted string with the messages for the given user, masterUserList, and activeUserList
 string getMessagesJSON(string username, map<string,vector<string>> &messageMap,vector<string> &masterUserList,vector<string> &activeUserList, map<string,user> &userMap) {
 	/* retrieve json list of messages for this user along with a userlist*/
 	bool first = true;
@@ -69,6 +74,7 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 	return result;
 }
 
+// Defines various endpoints for operations
 int main(void) {
   Server svr;
   int nextUser=0;
@@ -84,6 +90,7 @@ int main(void) {
   });
 
 
+  // Registers a new user with the given username, email, password, and color
   svr.Get(R"(/chat/register/(.*)/(.*)/(.*)/(.*))", [&](const Request& req, Response& res) {
     res.set_header("Access-Control-Allow-Origin","*");
     string username = req.matches[1];
@@ -113,6 +120,8 @@ int main(void) {
     }
 	res.set_content(result, "text/json");
   });
+
+  // Logs in a user with the given username and password
   svr.Get(R"(/chat/join/(.*)/(.*))", [&](const Request& req, Response& res) {
     res.set_header("Access-Control-Allow-Origin","*");
     string username = req.matches[1];
@@ -135,6 +144,7 @@ int main(void) {
     res.set_content(result, "text/json");
   });
 
+   // Sends a message from the given username's user
    svr.Get(R"(/chat/send/(.*)/(.*))", [&](const Request& req, Response& res) {
     res.set_header("Access-Control-Allow-Origin","*");
 	string username = req.matches[1];
@@ -151,6 +161,7 @@ int main(void) {
     res.set_content(result, "text/json");
   });
   
+   //Fetches messages and user lists for the given username's user.
    svr.Get(R"(/chat/fetch/(.*))", [&](const Request& req, Response& res) {
     string username = req.matches[1];
     res.set_header("Access-Control-Allow-Origin","*");
@@ -158,6 +169,7 @@ int main(void) {
     res.set_content(resultJSON, "text/json");  
     });
 
+  // Returns a JSON-formatted string with a status of "success" and the given name
   svr.Get(R"(/chat/hello/(.*))", [&](const Request& req, Response& res) {
     string name = req.matches[1];
     res.set_header("Access-Control-Allow-Origin","*");
@@ -165,6 +177,7 @@ int main(void) {
     res.set_content(resultJSON, "text/json");
   });
 
+  // Logs out the user with the given name.
   svr.Get(R"(/chat/logout/(.*))", [&](const Request& req, Response& res) {
     string name = req.matches[1];
     res.set_header("Access-Control-Allow-Origin","*");
