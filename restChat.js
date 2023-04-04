@@ -29,6 +29,7 @@ document.getElementById('register-btn').addEventListener("click", (e) => {
 /* Set up buttons */
 document.getElementById('leave-btn').addEventListener("click", leaveSession);
 document.getElementById('send-btn').addEventListener("click", sendText);
+document.getElementById('color-toggle').addEventListener("click", toggleMode);
 
 // Watch for enter on message box
 document.getElementById('message').addEventListener("keydown", (e)=> {
@@ -40,6 +41,11 @@ document.getElementById('message').addEventListener("keydown", (e)=> {
     }   
 });
 
+// function for toggling the css on the page between light and dark mode.
+function toggleMode() {
+    var element = document.getElementById('body');
+    element.classList.toggle("dark-mode");
+}
 
 // Call function on page exit
 window.onbeforeunload = leaveSession;
