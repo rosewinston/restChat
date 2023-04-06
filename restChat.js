@@ -56,8 +56,10 @@ function register() {
     password = document.getElementById('register-pass').value;
     var temp = document.getElementById("userColor").value;
 	color = temp.slice(1);
-    console.log("registration start");
-fetch(baseUrl+'/chat/register/'+username+'/'+email+'/'+password+'/'+color, {
+    if (password.length() < 6) {
+	alert("Password too short, try again.");    
+    }
+    fetch(baseUrl+'/chat/register/'+username+'/'+email+'/'+password+'/'+color, {
         method: 'get'
     })
     .then (response => response.json() )
