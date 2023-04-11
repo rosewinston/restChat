@@ -21,20 +21,22 @@ h6 {
 
 /* Text Box attributes */
 .textinput {
-    width: 400px;
+    width: 600px;
     font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
     font-size: 82%;
+	margin:auto;
 }
 
 /* Scroll Box attributes */
 .scrollabletextbox {
     background-color: #e6b3ff;
 	color: black;
-    height: 300px;
-    width: 400px;
+    height: 400px;
+    width: 600px;
     font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
     font-size: 82%;
     overflow:scroll;
+	margin:auto;
 }
 
 .navbar {
