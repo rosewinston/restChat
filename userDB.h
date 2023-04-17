@@ -17,13 +17,13 @@
 //#include <cppconn/prepared_statement.h>
 
 //CHANGE LINE 20 BELOW TO FUTURE userEntry.h 
-#include "contactEntry.h"
+#include "userEntry.h"
 
 #ifndef USERDB_H
 #define USERDB_H
 
-//NOTE FOR LATER change user, change pass, and change database name 
-#define DB_URL "jdbc:mariadb://localhost:3306/ContactAppDB"
+//NOTE FOR LATER change user, change pass,
+#define DB_URL "jdbc:mariadb://localhost:3306/RestChatUsers"
 #define USER "root"
 #define PASS "ubuntu"
 
