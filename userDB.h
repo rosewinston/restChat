@@ -38,7 +38,7 @@ public:
     vector<contactEntry> findByFirst(string first);
     vector<contactEntry> findByLast(string last);
     vector<contactEntry> findByType(string type);
-    contactEntry fetchEntry(string token);
+    userEntry fetchEntry(string token);
     void addEntry(string user,string email,string password,string color,bool active);
     void editEntry(string token,string user,string email,string password,string color,bool active);
     void deleteEntry(string idnum);
