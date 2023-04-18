@@ -102,12 +102,11 @@ string checkEmail(string username, string password, string email,string color, m
 	if (userMap.count(username) || !emailUnique) {
     		cout << "exists" << endl;
 		result = "{\"status\":\"exists\"}";
-		return result;
     } 	else {
     		addUser(username,email,password,color,userMap,masterUserList);
 		result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
-		return result;
     }
+	return result;
 }
 
 void addUser(string username, string email, string password, string color, map<string,user> &userMap, vector<string> &masterUserList) {
