@@ -99,24 +99,24 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 
 string checkEmail(string username, string password, string email,string color, map<string,user> &userMap) {
 	bool emailUnique = true;
+	string result;
 	for (auto pair : userMap){
-	   if (email == pair.second.getEmail()){
-		   emailUnique = false;
-       cout << "email not unique" << endl;
-	   } 
-    }
-    if (userMap.count(username) || !emailUnique) {
-    	cout << "exists" << endl;
-      result = "{\"status\":\"exists\"}";
-    } else {
-    	addUser(username,email,password,color, true);
-	string result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
+		if (email == pair.second.getEmail()){
+			emailUnique = false;
+			cout << "email not unique" << endl;
+	   	} 
+}	if (userMap.count(username) || !emailUnique) {
+    		cout << "exists" << endl;
+	      result = "{\"status\":\"exists\"}";
+    } 	else {
+    		addUser(username,email,password,color, userMap);
+		result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
     }
 	return result;
 }
 
-void addUser(string username, string email, string password, string color, bool active) {
-	user newUser(username, email, password, color, active);
+void addUser(string username, string email, string password, string color, map<string,user> &userMap) {
+	user newUser(username, email, password, color, 'true');
         	cout << "user created" << endl;
         	userMap[username]=newUser;
         	masterUserList.push_back(username);
