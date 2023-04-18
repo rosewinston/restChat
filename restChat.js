@@ -121,7 +121,7 @@ function completeSend(results) {
 function sendText() {
     var message = document.getElementById('message').value;
     console.log("Send: "+myname+":"+message);
-	fetch(baseUrl+'/chat/send/'+myname+'/'+message, {
+	fetch(baseUrl+'/chat/send/'+token+'/'+message, {
         method: 'get'
     })
 
@@ -167,7 +167,7 @@ function completeFetch(result) {
 
 /* Check for new messaged */
 function fetchMessage() {
-	fetch(baseUrl+'/chat/fetch/'+myname, {
+	fetch(baseUrl+'/chat/fetch/'+token, {
         method: 'get'
     })
     .then (response => response.json() )
@@ -219,7 +219,7 @@ var status = result['status'];
 
 // Logs out the current user from the chat
 function logout(){
-    fetch(baseUrl+'/chat/logout/'+myname, {
+    fetch(baseUrl+'/chat/logout/'+token, {
         method: 'get'
     })
     .then (response => response.json() )
