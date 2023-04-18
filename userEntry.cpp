@@ -4,13 +4,12 @@ userEntry::userEntry() {
 }
 
 //COME BACK AND EDIT SQL DATATYPES BELOW 
-userEntry::userEntry(sql::SQLString u, sql::SQLString e, sql::SQLString p, sql::SQLString c, sql::SQLString a, sql::SQLString t) {
+userEntry::userEntry(sql::SQLString u, sql::SQLString e, sql::SQLString p, sql::SQLString c, sql::SQLString a) {
     username = u;
     email = e;
     password = p;
     color = c;
     active = a; 
-    token = t; 
    
 }
 
@@ -19,8 +18,7 @@ string userEntry::text() {
 	result += email + " ";
 	result += password + " ";
 	result += color + " ";
-	result += active + " ";
-	result += token;
+	result += active;
 	return result;
 
 }
@@ -30,8 +28,7 @@ string userEntry::json() {
 	result += "\"email\":\"" + email + "\",";
 	result += "\"password\":\"" + password + "\",";
 	result += "\"color\":\"" + color + "\",";
-	result += "\"active\":\"" + active + "\",";
-	result += "\"token\":\"" + token + "\"}";
+	result += "\"active\":\"" + active + "\"}";
 	
 	return result;
 
