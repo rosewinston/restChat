@@ -18,6 +18,13 @@ using namespace std;
 
 const int port = 5005;
 
+// creates a test user 
+void createTestUser(map<string,user> &userMap,vector<string> &masterUserList) {
+	user newUser("admin", "test1234", "password", "7d9dde", false);
+	userMap["admin"]=newUser;
+	masterUserList.push_back("admin");
+}
+
 // Takes a username, message, message map, color
 // and constructs a JSON-formatted string containing the user's information and the message,
 // and then this JSON string to the message list of all users in the message map.
@@ -99,6 +106,7 @@ int main(void) {
   vector<string> activeUserList;
   map<string, user> userMap;
   map<string,string> tokenMap;
+  createTestUser(userMap,masterUserList);
 	
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
