@@ -9,6 +9,7 @@
 #include <fstream>
 #include <map>
 #include <algorithm>
+#include <random>
 #include "httplib.h"
 #include "user.h"
 
@@ -27,6 +28,14 @@ void addMessage(string username, string message, map<string,vector<string>> &mes
 		username = userMessagePair.first;
 		messageMap[username].push_back(jsonMessage);
 	}
+}
+
+// Function for when a user joins, generating an automatic token for them for use in the program instead of the username
+// this token is in a map associated with the username for easy association betweeen the two
+string generateToken(string username, map<string,string> &tokenMap) {
+	int token = rand() % 89999 + 10000;
+	tokenMap[username] = token;
+	return token;
 }
 
 // Takes a username, message map, masterUserList, activeUserList, and user map
@@ -82,6 +91,7 @@ int main(void) {
   vector<string> masterUserList;
   vector<string> activeUserList;
   map<string, user> userMap;
+  map<string,string> tokenMap;
 	
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
@@ -129,12 +139,12 @@ int main(void) {
     string result;
     vector<string> empty;
     cout << username << " joins" << endl;
-    
     // Check if username and password matches with registered user
     if (userMap.count(username)) {
       if (password==userMap[username].getPassword()) {
         messageMap[username]=empty;
-		result = "{\"status\":\"success\",\"user\":\"" + username + "\"}";
+	token=generateToken(username, tokenMap);
+		result = "{\"status\":\"success\",\"user\":\"" + token + "\"}";
       }
     }
     else {
@@ -147,7 +157,7 @@ int main(void) {
    // Sends a message from the given username's user
    svr.Get(R"(/chat/send/(.*)/(.*))", [&](const Request& req, Response& res) {
     res.set_header("Access-Control-Allow-Origin","*");
-	string username = req.matches[1];
+	string token = req.matches[1];
 	string message = req.matches[2];
 	string result; 
 	
