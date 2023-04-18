@@ -109,7 +109,7 @@ string checkEmail(string username, string password, string email,string color, m
     		cout << "exists" << endl;
 	      result = "{\"status\":\"exists\"}";
     } 	else {
-    		addUser(username,email,password,color, userMap,masterUserList);
+    		addUser(username,email,password,color,userMap,masterUserList);
 		result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
     }
 	return result;
@@ -131,7 +131,7 @@ int main(void) {
   vector<string> activeUserList;
   map<string, user> userMap;
   map<string,string> tokenMap;
-  createTestUser(userMap,masterUserList);
+  addUser("admin","test1234","password","7d9dde",userMap,masterUserList);
 	
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
