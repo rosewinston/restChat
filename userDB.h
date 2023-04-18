@@ -16,13 +16,12 @@
 //#include <cppconn/statement.h>
 //#include <cppconn/prepared_statement.h>
 
-//CHANGE LINE 20 BELOW TO FUTURE userEntry.h 
 #include "userEntry.h"
 
 #ifndef USERDB_H
 #define USERDB_H
 
-//NOTE FOR LATER change user, change pass,
+
 #define DB_URL "jdbc:mariadb://localhost:3306/RestChatUsers"
 #define USER "root"
 #define PASS "ubuntu"
@@ -38,9 +37,9 @@ public:
     vector<contactEntry> findByFirst(string first);
     vector<contactEntry> findByLast(string last);
     vector<contactEntry> findByType(string type);
-    userEntry fetchEntry(string token);
-    void addEntry(string user,string email,string password,string color,bool active);
-    void editEntry(string token,string user,string email,string password,string color,bool active);
+    userEntry fetchEntry(string user);
+    void addEntry(string user,string email,string password,string color, bool active);
+    void editEntry(string user,string email,string password,string color, bool active);
     void deleteEntry(string idnum);
 private:
     const string db_url=DB_URL;
