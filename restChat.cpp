@@ -97,7 +97,7 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 	return result;
 }
 
-string checkEmail(string email, map<string,user> &userMap) {
+string checkEmail(string username, string password, string email,string color, map<string,user> &userMap) {
 	bool emailUnique = true;
 	for (auto pair : userMap){
 	   if (email == pair.second.getEmail()){
