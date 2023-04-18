@@ -7,12 +7,13 @@
 
 // Changed "contact" --> "user"
 // Changed "First" --> "Username"
-// Changed "Last" --> "Password"
-// Changed "Phone" --> "Color"
-// Changed "Type" --> "Active"
+// Changed "Last" --> "Email"
+// Changed "Phone" --> "Password"
+// Changed "Type" --> "Color"
+// Changed "Email" --> "Active"
 
 
-bool isValid(const string& email)
+/*bool isValid(const string& email)
 {
   
     // Regular expression definition
@@ -22,7 +23,7 @@ bool isValid(const string& email)
     // Match the string pattern
     // with regular expression
     return regex_match(email, pattern);
-}
+}*/
 
 
 userDB::userDB() {
@@ -66,17 +67,18 @@ vector<userEntry> userDB::find(string search) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     
     // Execute query
+	// Still left "Type" and "Email" here
     sql::ResultSet *res = stmnt->executeQuery(
-			"SELECT * FROM users WHERE Password like '%"+search+"%' OR "+
+			"SELECT * FROM users WHERE Email like '%"+search+"%' OR "+
     		 + "Username like '%"+search+"%' OR " +
-    		 + "Type like '%"+search+"%' OR " +
+    		 + "Type like '%"+search+"%' OR " + 
 	    	 + "Email like '%"+search+"%'");
     
     // Loop through and print results
     while (res->next()) {
-    	userEntry entry(res->getString("Username"),res->getString("Password"),
-			res->getString("Color"),res->getString("Type"),
-	    	res->getString("ID"),res->getString("Email"), res->getString("Age"));
+    	userEntry entry(res->getString("Username"),res->getString("Email"),
+			res->getString("Password"),res->getString("Color"),
+	    	res->getString("ID"),res->getString("Active"));
 	    	
 	    list.push_back(entry);
 
@@ -85,7 +87,7 @@ vector<userEntry> userDB::find(string search) {
 
 }
 
-vector<userEntry> userDB::findByPassword(string password) {
+vector<userEntry> userDB::findByEmail(string email) {
 
 	vector<userEntry> list;
     
@@ -98,13 +100,13 @@ vector<userEntry> userDB::findByPassword(string password) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Password like '%"+password+"%'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Email like '%"+email+"%'");
     
     // Loop through and print results
     while (res->next()) {
-    	userEntry entry(res->getString("Username"),res->getString("Password"),
-			res->getString("Color"),res->getString("Type"),
-	    	res->getString("ID"),res->getString("Email"),res->getString("Age"));
+    	userEntry entry(res->getString("Username"),res->getString("Email"),
+			res->getString("Password"),res->getString("Color"),
+	    	res->getString("ID"),res->getString("Active"));
 	    	
 	    list.push_back(entry);
 
@@ -130,9 +132,9 @@ vector<userEntry> userDB::findByUsername(string username) {
     
     // Loop through and print results
     while (res->next()) {
-    	userEntry entry(res->getString("Username"),res->getString("Password"),
-			res->getString("Color"),res->getString("Type"),
-	    	res->getString("ID"),res->getString("Email"),res->getString("Age"));
+    	userEntry entry(res->getString("Username"),res->getString("Email"),
+			res->getString("Password"),res->getString("Color"),
+	    	res->getString("ID"),res->getString("Active"));
 	    	
 	    list.push_back(entry);
 
@@ -140,7 +142,7 @@ vector<userEntry> userDB::findByUsername(string username) {
     return list;
 }
 
-vector<userEntry> userDB::findByType(string type) {
+vector<userEntry> userDB::findByColor(string color) {
 	vector<userEntry> list;
 	
     // Make sure the connection is still valid
@@ -152,13 +154,13 @@ vector<userEntry> userDB::findByType(string type) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Type like '%"+type+"%'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Color like '%"+color+"%'");
     
     // Loop through and print results
     while (res->next()) {
-    	userEntry entry(res->getString("Username"),res->getString("Password"),
-			res->getString("Color"),res->getString("Type"),
-	    	res->getString("ID"),res->getString("Email"),res->getString("Age"));
+    	userEntry entry(res->getString("Username"),res->getString("Email"),
+			res->getString("Password"),res->getString("Color"),
+	    	res->getString("ID"),res->getString("Active"));
 	    	
 	    list.push_back(entry);
 
@@ -167,8 +169,11 @@ vector<userEntry> userDB::findByType(string type) {
 
 }
 
-//HERE!
-vector<userEntry> userDB::findByEmail(string email) {
+// Maybe I should leave this????
+// Did not modify yet
+// I don't think so, we have it up there
+
+/*vector<userEntry> userDB::findByEmail(string email) {
 	vector<userEntry> list;
 	
     // Make sure the connection is still valid
@@ -184,9 +189,9 @@ vector<userEntry> userDB::findByEmail(string email) {
     
     // Loop through and print results
     while (res->next()) {
-    	userEntry entry(res->getString("Username"),res->getString("Password"),
-			res->getString("Color"),res->getString("Type"),
-	    	res->getString("ID"),res->getString("Email"),res->getString("Age"));
+    	userEntry entry(res->getString("Username"),res->getString("Email"),
+			res->getString("Password"),res->getString("Color"),
+	    	res->getString("ID"),res->getString("Active"));
 	    	
 	    list.push_back(entry);
 
@@ -194,8 +199,9 @@ vector<userEntry> userDB::findByEmail(string email) {
     return list;
 
 }
+*/
 
-void userDB::addEntry(string username,string password,string color, string type, string email, string age){
+void userDB::addEntry(string username,string email,string password, string color, string active){
 
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -204,7 +210,7 @@ void userDB::addEntry(string username,string password,string color, string type,
 
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
 
-  	if (type != "Friend" && type != "Family" && type!="Business"){
+  	/*if (type != "Friend" && type != "Family" && type!="Business"){
      	 type="Other";
   	}
   	
@@ -212,10 +218,10 @@ void userDB::addEntry(string username,string password,string color, string type,
 	  if (!isValid(email))
           {
               email=" ";
-          }   
+          }   */
 	
 	
-  	stmnt->executeQuery("INSERT INTO users(Username,Password,Color,Type,Email,Age) VALUES ('"+username+"','"+password+"','"+color+"','"+type+"','"+email+"','"+age+"')");
+  	stmnt->executeQuery("INSERT INTO users(Username,Email,Password,Color,Active) VALUES ('"+username+"','"+email+"','"+password+"','"+color+"','"+active+"')");
 }
 
 userEntry userDB::fetchEntry(string id){
@@ -234,14 +240,14 @@ userEntry userDB::fetchEntry(string id){
     
     // Get username entry
     if (res->next()) {
-    	entry = userEntry(res->getString("Username"),res->getString("Password"),
-			res->getString("Color"),res->getString("Type"),
-	    	res->getString("ID"),res->getString("Email"),res->getString("Age"));
+    	entry = userEntry(res->getString("Username"),res->getString("Email"),
+			res->getString("Password"),res->getString("Color"),
+	    	res->getString("ID"),res->getString("Active"));
     }
     return entry;
 }
 
-void userDB::editEntry(string idnum,string username,string password,string color, string type, string email, string age){
+void userDB::editEntry(string idnum,string username,string email,string password, string color, string active){
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
@@ -249,16 +255,16 @@ void userDB::editEntry(string idnum,string username,string password,string color
 
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
 
-  	if (type != "Friend" && type != "Family" && type!="Business"){
+  	/*if (type != "Friend" && type != "Family" && type!="Business"){
      	 type="Other";
   	}
   	
 	 if (!isValid(email))
          {
              email=" ";
-         }  
+         }  */
 	
-  	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Password ='"+password+"', Color ='"+color+"', Type ='"+type+"', Email = '"+email+"', Age='"+age+"' WHERE ID='"+idnum+"'");
+  	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Email ='"+email+"', Password ='"+password+"', Color ='"+color+"', Active = '"+active+"' WHERE ID='"+idnum+"'");
   	
 }
 
