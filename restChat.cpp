@@ -32,10 +32,16 @@ void addMessage(string username, string message, map<string,vector<string>> &mes
 
 // Function for when a user joins, generating an automatic token for them for use in the program instead of the username
 // this token is in a map associated with the username for easy association betweeen the two
-string generateToken(string username, map<string,string> &tokenMap) {
+int generateToken(string username, map<int,string> &tokenMap) {
 	int token = rand() % 89999 + 10000;
-	tokenMap[username] = token;
+	tokenMap[token] = username;
 	return token;
+}
+
+// verify the token by returning the username
+string verifyToken(int token, map<int,string> &tokenMap) {
+	string username = tokenMap.find(token)->second;
+	return username;
 }
 
 // Takes a username, message map, masterUserList, activeUserList, and user map
@@ -91,7 +97,7 @@ int main(void) {
   vector<string> masterUserList;
   vector<string> activeUserList;
   map<string, user> userMap;
-  map<string,string> tokenMap;
+  map<int,string> tokenMap;
 	
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
@@ -160,7 +166,7 @@ int main(void) {
 	string token = req.matches[1];
 	string message = req.matches[2];
 	string result; 
-	
+	username = verifyToken(token);
     if (!messageMap.count(username)) {
     	result = "{\"status\":\"baduser\"}";
 	} else {
@@ -173,7 +179,8 @@ int main(void) {
   
    //Fetches messages and user lists for the given username's user.
    svr.Get(R"(/chat/fetch/(.*))", [&](const Request& req, Response& res) {
-    string username = req.matches[1];
+    string token = req.matches[1];
+    username = verifyToken(token);
     res.set_header("Access-Control-Allow-Origin","*");
     string resultJSON = getMessagesJSON(username,messageMap,masterUserList,activeUserList,userMap);
     res.set_content(resultJSON, "text/json");  
@@ -189,7 +196,8 @@ int main(void) {
 
   // Logs out the user with the given name.
   svr.Get(R"(/chat/logout/(.*))", [&](const Request& req, Response& res) {
-    string name = req.matches[1];
+    string token = req.matches[1];
+    name = verifyToken(token);
     res.set_header("Access-Control-Allow-Origin","*");
 	userMap[name].setActive(false);
     string resultJSON = "{\"status\":\"success\",\"name\":\""+name+"\"}"; 
