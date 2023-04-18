@@ -9,7 +9,7 @@ class userEntry {
 public:
      userEntry();
   // CHECK THE LINE BELOW AGAIN
-     userEntry(sql::SQLString u, sql::SQLString e, sql::SQLString p, sql::SQLString c,sql::SQLString a, sql::SQLString t);
+     userEntry(sql::SQLString u, sql::SQLString e, sql::SQLString p, sql::SQLString c,sql::SQLString a);
      string text();
      string json();
      
@@ -18,7 +18,6 @@ public:
      string password;
      string color;
      string active;
-     string token; // WOULD THIS BE A STRING? yes!
 
 private:
 
