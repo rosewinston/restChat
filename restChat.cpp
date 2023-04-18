@@ -97,7 +97,7 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 	return result;
 }
 
-string checkEmail(string username, string password, string email,string color, map<string,user> &userMap) {
+string checkEmail(string username, string password, string email,string color, map<string,user> &userMap, vector<string> &masterUserList) {
 	bool emailUnique = true;
 	string result;
 	for (auto pair : userMap){
@@ -109,7 +109,7 @@ string checkEmail(string username, string password, string email,string color, m
     		cout << "exists" << endl;
 	      result = "{\"status\":\"exists\"}";
     } 	else {
-    		addUser(username,email,password,color, userMap);
+    		addUser(username,email,password,color, userMap,masterUserList);
 		result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
     }
 	return result;
