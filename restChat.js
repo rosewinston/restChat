@@ -1,5 +1,5 @@
 // Rest based chat client
-// Jim Skon 2022
+// Rose, Sebi, Michelle 2023
 // Kenyon College
 
 var baseUrl = 'http://44.202.89.194:5005';
@@ -9,6 +9,7 @@ var email="";
 var password="";
 var color="";
 var username="";
+var token="";
 
 var inthandle;
 var masterUserList =[];
@@ -59,6 +60,7 @@ function register() {
     if (password.length < 6) {
 	alert("Password too short, try again.");    
     }
+	else {
     fetch(baseUrl+'/chat/register/'+username+'/'+email+'/'+password+'/'+color, {
         method: 'get'
     })
@@ -67,6 +69,7 @@ function register() {
     .catch(error => {
         {alert("Error: Something went wrong:"+error);}
     })
+	}
 }
 
 // Handle the registration response from the server. Only registers if there exists no overlapping username/email.
@@ -89,9 +92,9 @@ function completeJoin(results) {
 		leaveSession();
 		return;
 	}
-	var user = results['user'];
-	console.log("Join:"+user);
-	startSession(user);
+	token = results['user'];
+	console.log("Join:"+token);
+	startSession(myname);
 }
 
 // Joins the chat by sending the username and password to the server
