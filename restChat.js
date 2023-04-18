@@ -88,7 +88,7 @@ function completeRegister(results) {
 function completeJoin(results) {
 	var status = results['status'];
 	if (status != "success") {
-		alert("User already exists");
+		alert("User does not exist");
 		leaveSession();
 		return;
 	}
