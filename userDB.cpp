@@ -67,18 +67,15 @@ vector<userEntry> userDB::find(string search) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     
     // Execute query
-	// Still left "Type" and "Email" here
     sql::ResultSet *res = stmnt->executeQuery(
 			"SELECT * FROM users WHERE Email like '%"+search+"%' OR "+
-    		 + "Username like '%"+search+"%' OR " +
-    		 + "Type like '%"+search+"%' OR " + 
-	    	 + "Email like '%"+search+"%'");
+	    	 + "Username like '%"+search+"%'");
     
     // Loop through and print results
     while (res->next()) {
     	userEntry entry(res->getString("Username"),res->getString("Email"),
 			res->getString("Password"),res->getString("Color"),
-	    	res->getString("ID"),res->getString("Active"));
+	    	res->getString("Active"));
 	    	
 	    list.push_back(entry);
 
@@ -106,7 +103,7 @@ vector<userEntry> userDB::findByEmail(string email) {
     while (res->next()) {
     	userEntry entry(res->getString("Username"),res->getString("Email"),
 			res->getString("Password"),res->getString("Color"),
-	    	res->getString("ID"),res->getString("Active"));
+	    	res->getString("Active"));
 	    	
 	    list.push_back(entry);
 
@@ -134,7 +131,7 @@ vector<userEntry> userDB::findByUsername(string username) {
     while (res->next()) {
     	userEntry entry(res->getString("Username"),res->getString("Email"),
 			res->getString("Password"),res->getString("Color"),
-	    	res->getString("ID"),res->getString("Active"));
+	    	res->getString("Active"));
 	    	
 	    list.push_back(entry);
 
@@ -142,6 +139,8 @@ vector<userEntry> userDB::findByUsername(string username) {
     return list;
 }
 
+// Remove
+/*
 vector<userEntry> userDB::findByColor(string color) {
 	vector<userEntry> list;
 	
@@ -168,10 +167,10 @@ vector<userEntry> userDB::findByColor(string color) {
     return list;
 
 }
+*/
 
-// Maybe I should leave this????
-// Did not modify yet
-// I don't think so, we have it up there
+
+// Remove
 
 /*vector<userEntry> userDB::findByEmail(string email) {
 	vector<userEntry> list;
@@ -224,7 +223,8 @@ void userDB::addEntry(string username,string email,string password, string color
   	stmnt->executeQuery("INSERT INTO users(Username,Email,Password,Color,Active) VALUES ('"+username+"','"+email+"','"+password+"','"+color+"','"+active+"')");
 }
 
-userEntry userDB::fetchEntry(string id){
+// string "id" --> string "username"
+userEntry userDB::fetchEntry(string username){
 
 	userEntry entry;	
 	
@@ -236,13 +236,14 @@ userEntry userDB::fetchEntry(string id){
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
 
   	
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE ID = '"+id+"'");
+    //changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '"+username+"'");
     
     // Get username entry
     if (res->next()) {
     	entry = userEntry(res->getString("Username"),res->getString("Email"),
 			res->getString("Password"),res->getString("Color"),
-	    	res->getString("ID"),res->getString("Active"));
+	    	res->getString("Active"));
     }
     return entry;
 }
@@ -264,11 +265,13 @@ void userDB::editEntry(string idnum,string username,string email,string password
              email=" ";
          }  */
 	
-  	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Email ='"+email+"', Password ='"+password+"', Color ='"+color+"', Active = '"+active+"' WHERE ID='"+idnum+"'");
+	//changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
+  	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Email ='"+email+"', Password ='"+password+"', Color ='"+color+"', Active = '"+active+"' WHERE Username='"+username+"'");
   	
 }
 
 
+/*
 void userDB::deleteEntry(string idnum){
   // Establish Connection
   std::unique_ptr<sql::Connection>  conn(driver->connect(db_url, properties));
@@ -280,5 +283,7 @@ void userDB::deleteEntry(string idnum){
 
   std::auto_ptr<sql::Statement> stmt(conn->createStatement());
 
-  stmt->execute("DELETE FROM users WHERE ID='"+idnum+"'");
+  //changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
+  stmt->execute("DELETE FROM users WHERE Username='"+username+"'");
 }
+*/
