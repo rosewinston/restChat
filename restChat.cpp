@@ -115,8 +115,8 @@ string checkEmail(string username, string password, string email,string color, m
 	return result;
 }
 
-void addUser(string username, string email, string password, string color, map<string,user> &userMap) {
-	user newUser(username, email, password, color, 'true');
+void addUser(string username, string email, string password, string color, map<string,user> &userMap, vector<string> &masterUserList) {
+	user newUser(username, email, password, color, true);
         	cout << "user created" << endl;
         	userMap[username]=newUser;
         	masterUserList.push_back(username);
