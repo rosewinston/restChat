@@ -150,7 +150,7 @@ int main(void) {
     bool active = true;
     string result;
     cout << username << email << password << color << endl;
-    result = checkEmail(username,email,password,color,userMap);
+    result = checkEmail(username,email,password,color,userMap,masterUserList);
 	res.set_content(result, "text/json");
   });
 
