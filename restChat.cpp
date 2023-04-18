@@ -110,7 +110,7 @@ string checkEmail(string username, string password, string email,string color, m
       result = "{\"status\":\"exists\"}";
     } else {
     	addUser(username,email,password,color, true);
-	result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
+	string result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
     }
 	return result;
 }
