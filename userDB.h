@@ -24,19 +24,14 @@
 
 #define DB_URL "jdbc:mariadb://localhost:3306/RestChatUsers"
 #define USER "root"
-#define PASS "ubuntu"
+#define PASS "0606"
 
 using namespace std;
 
 class userDB {
 public:
     userDB();
-  
- //edit and look over everything else later 
     vector<contactEntry> find(string search);
-    vector<contactEntry> findByFirst(string first);
-    vector<contactEntry> findByLast(string last);
-    vector<contactEntry> findByType(string type);
     userEntry fetchEntry(string user);
     void addEntry(string user,string email,string password,string color, bool active);
     void editEntry(string user,string email,string password,string color, bool active);
