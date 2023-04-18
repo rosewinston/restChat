@@ -5,6 +5,11 @@
 #include "userDB.h"
 #include "userEntry.h"
 
+// Changed "contact" --> "user"
+// Changed "First" --> "Username"
+// Changed "Last" --> "Password"
+// Changed "Phone" --> "Color"
+// Changed "Type" --> "Active"
 
 
 bool isValid(const string& email)
@@ -62,15 +67,15 @@ vector<userEntry> userDB::find(string search) {
     
     // Execute query
     sql::ResultSet *res = stmnt->executeQuery(
-			"SELECT * FROM users WHERE Last like '%"+search+"%' OR "+
-    		 + "First like '%"+search+"%' OR " +
+			"SELECT * FROM users WHERE Password like '%"+search+"%' OR "+
+    		 + "Username like '%"+search+"%' OR " +
     		 + "Type like '%"+search+"%' OR " +
 	    	 + "Email like '%"+search+"%'");
     
     // Loop through and print results
     while (res->next()) {
-    	userEntry entry(res->getString("First"),res->getString("Last"),
-			res->getString("Phone"),res->getString("Type"),
+    	userEntry entry(res->getString("Username"),res->getString("Password"),
+			res->getString("Color"),res->getString("Type"),
 	    	res->getString("ID"),res->getString("Email"), res->getString("Age"));
 	    	
 	    list.push_back(entry);
@@ -80,7 +85,7 @@ vector<userEntry> userDB::find(string search) {
 
 }
 
-vector<userEntry> userDB::findByLast(string last) {
+vector<userEntry> userDB::findByPassword(string password) {
 
 	vector<userEntry> list;
     
@@ -93,12 +98,12 @@ vector<userEntry> userDB::findByLast(string last) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Last like '%"+last+"%'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Password like '%"+password+"%'");
     
     // Loop through and print results
     while (res->next()) {
-    	userEntry entry(res->getString("First"),res->getString("Last"),
-			res->getString("Phone"),res->getString("Type"),
+    	userEntry entry(res->getString("Username"),res->getString("Password"),
+			res->getString("Color"),res->getString("Type"),
 	    	res->getString("ID"),res->getString("Email"),res->getString("Age"));
 	    	
 	    list.push_back(entry);
@@ -108,7 +113,7 @@ vector<userEntry> userDB::findByLast(string last) {
 
 }
 
-vector<userEntry> userDB::findByFirst(string first) {
+vector<userEntry> userDB::findByUsername(string username) {
 
 	vector<userEntry> list;
 	
@@ -121,12 +126,12 @@ vector<userEntry> userDB::findByFirst(string first) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE First like '%"+first+"%'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username like '%"+username+"%'");
     
     // Loop through and print results
     while (res->next()) {
-    	userEntry entry(res->getString("First"),res->getString("Last"),
-			res->getString("Phone"),res->getString("Type"),
+    	userEntry entry(res->getString("Username"),res->getString("Password"),
+			res->getString("Color"),res->getString("Type"),
 	    	res->getString("ID"),res->getString("Email"),res->getString("Age"));
 	    	
 	    list.push_back(entry);
@@ -151,8 +156,8 @@ vector<userEntry> userDB::findByType(string type) {
     
     // Loop through and print results
     while (res->next()) {
-    	userEntry entry(res->getString("First"),res->getString("Last"),
-			res->getString("Phone"),res->getString("Type"),
+    	userEntry entry(res->getString("Username"),res->getString("Password"),
+			res->getString("Color"),res->getString("Type"),
 	    	res->getString("ID"),res->getString("Email"),res->getString("Age"));
 	    	
 	    list.push_back(entry);
@@ -179,8 +184,8 @@ vector<userEntry> userDB::findByEmail(string email) {
     
     // Loop through and print results
     while (res->next()) {
-    	userEntry entry(res->getString("First"),res->getString("Last"),
-			res->getString("Phone"),res->getString("Type"),
+    	userEntry entry(res->getString("Username"),res->getString("Password"),
+			res->getString("Color"),res->getString("Type"),
 	    	res->getString("ID"),res->getString("Email"),res->getString("Age"));
 	    	
 	    list.push_back(entry);
@@ -190,7 +195,7 @@ vector<userEntry> userDB::findByEmail(string email) {
 
 }
 
-void userDB::addEntry(string first,string last,string phone, string type, string email, string age){
+void userDB::addEntry(string username,string password,string color, string type, string email, string age){
 
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -210,7 +215,7 @@ void userDB::addEntry(string first,string last,string phone, string type, string
           }   
 	
 	
-  	stmnt->executeQuery("INSERT INTO users(First,Last,Phone,Type,Email,Age) VALUES ('"+first+"','"+last+"','"+phone+"','"+type+"','"+email+"','"+age+"')");
+  	stmnt->executeQuery("INSERT INTO users(Username,Password,Color,Type,Email,Age) VALUES ('"+username+"','"+password+"','"+color+"','"+type+"','"+email+"','"+age+"')");
 }
 
 userEntry userDB::fetchEntry(string id){
@@ -227,16 +232,16 @@ userEntry userDB::fetchEntry(string id){
   	
     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE ID = '"+id+"'");
     
-    // Get first entry
+    // Get username entry
     if (res->next()) {
-    	entry = userEntry(res->getString("First"),res->getString("Last"),
-			res->getString("Phone"),res->getString("Type"),
+    	entry = userEntry(res->getString("Username"),res->getString("Password"),
+			res->getString("Color"),res->getString("Type"),
 	    	res->getString("ID"),res->getString("Email"),res->getString("Age"));
     }
     return entry;
 }
 
-void userDB::editEntry(string idnum,string first,string last,string phone, string type, string email, string age){
+void userDB::editEntry(string idnum,string username,string password,string color, string type, string email, string age){
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
@@ -253,7 +258,7 @@ void userDB::editEntry(string idnum,string first,string last,string phone, strin
              email=" ";
          }  
 	
-  	stmnt->executeQuery("UPDATE users SET First = '"+first+"', Last ='"+last+"', Phone ='"+phone+"', Type ='"+type+"', Email = '"+email+"', Age='"+age+"' WHERE ID='"+idnum+"'");
+  	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Password ='"+password+"', Color ='"+color+"', Type ='"+type+"', Email = '"+email+"', Age='"+age+"' WHERE ID='"+idnum+"'");
   	
 }
 
