@@ -40,7 +40,7 @@ void addMessage(string username, string message, map<string,vector<string>> &mes
 // Function for when a user joins, generating an automatic token for them for use in the program instead of the username
 // this token is in a map associated with the username for easy association betweeen the two
 string generateToken(string username, map<string,string> &tokenMap) {
-	int tokenInt = rand() % 89999 + 10000;
+	int tokenInt = rand() % 89999999 + 10000000;
 	string token=to_string(tokenInt);
 	tokenMap[token] = username;
 	return token;
@@ -97,6 +97,31 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 	return result;
 }
 
+string checkEmail(string email, map<string,user> &userMap) {
+	bool emailUnique = true;
+	for (auto pair : userMap){
+	   if (email == pair.second.getEmail()){
+		   emailUnique = false;
+       cout << "email not unique" << endl;
+	   } 
+    }
+    if (userMap.count(username) || !emailUnique) {
+    	cout << "exists" << endl;
+      result = "{\"status\":\"exists\"}";
+    } else {
+    	addUser(username,email,password,color, true);
+	result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
+    }
+	return result;
+}
+
+void addUser(string username, string email, string password, string color, bool active) {
+	user newUser(username, email, password, color, active);
+        	cout << "user created" << endl;
+        	userMap[username]=newUser;
+        	masterUserList.push_back(username);
+}
+
 // Defines various endpoints for operations
 int main(void) {
   Server svr;
@@ -125,24 +150,7 @@ int main(void) {
     bool active = true;
     string result;
     cout << username << email << password << color << endl;
-    bool emailUnique = true;
-    for (auto pair : userMap){
-	   if (email == pair.second.getEmail()){
-		   emailUnique = false;
-       cout << "email not unique" << endl;
-	   } 
-    }
-    if (userMap.count(username) || !emailUnique) {
-    	cout << "exists" << endl;
-      result = "{\"status\":\"exists\"}";
-    } else {
-    	// Add user to messages map
-        user newUser(username, email, password, color, active);
-        cout << "user created" << endl;
-        userMap[username]=newUser;
-        masterUserList.push_back(username);
-	result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
-    }
+    result = checkEmail(username,email,password,color,userMap);
 	res.set_content(result, "text/json");
   });
 
