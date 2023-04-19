@@ -92,6 +92,10 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 
 void addUser(string username, string email, string password, string color, map<string,user> &userMap, vector<string> &masterUserList) {
 	user newUser(username, email, password, color, false);
+	
+	//trying userDB::addEntry (see userDB.cpp) below
+	addEntry(username, email, password, color, false);
+	
         cout << "user created" << endl;
 	userMap[username]=newUser;
 	masterUserList.push_back(username);
