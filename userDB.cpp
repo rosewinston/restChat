@@ -137,7 +137,7 @@ bool userDB::checkEmail(string email) {
 
  
 	
-    if (res->rowCount() == 0){
+    if (res->rowsCount() == 0){
        return false; 
     }else{
        return true; 
@@ -160,7 +160,7 @@ bool userDB::checkUser(string username) {
 
  
 	
-    if (res->rowCount() == 0){
+    if (res->rowsCount() == 0){
        return false; 
     }else{
        return true; 
@@ -183,7 +183,7 @@ bool userDB::checkPassword(string username, string password){
 
  
 	
-    if (res->rowCount() == 0){
+    if (res->rowsCount() == 0){
        return false; 
     }else{
        return true; 
