@@ -137,13 +137,13 @@ int main(void) {
 
 
   // Registers a new user with the given username, email, password, and color
+  // Got rid of: bool active = true;
   svr.Get(R"(/chat/register/(.*)/(.*)/(.*)/(.*))", [&](const Request& req, Response& res) {
     res.set_header("Access-Control-Allow-Origin","*");
     string username = req.matches[1];
     string email = req.matches[2];
     string password = req.matches[3];
     string color = req.matches[4];
-    bool active = true;
     string result;
     cout << username << email << password << color << endl;
     result = checkEmail(username,email,password,color,userMap,masterUserList);
