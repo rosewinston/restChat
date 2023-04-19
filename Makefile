@@ -12,8 +12,8 @@ PutHTML:
 	echo "Current contents of your HTML directory: "
 	ls -l /var/www/html/restChat/
 
-restChat : restChat.cpp httplib.h user.cpp user.h
-	$(CXX) -o restChat $(CXXFLAGS) restChat.cpp user.cpp $(OPENSSL_SUPPORT) $(ZLIB_SUPPORT) $(BROTLI_SUPPORT) 
+restChat : restChat.cpp httplib.h user.cpp user.h userDB.cpp userDB.h
+	$(CXX) -o restChat $(CXXFLAGS) restChat.cpp user.cpp userDB.cpp $(OPENSSL_SUPPORT) $(ZLIB_SUPPORT) $(BROTLI_SUPPORT) 
 	
 userEntry.o: userEntry.cpp userEntry.h
 	$(CC) -c $(CFLAGS) userEntry.cpp
