@@ -122,7 +122,7 @@ userEntry userDB::fetchEntry(string username){
 }
 
 //takes in string email, and checks the database for any users that have that email. if no user has that email, return false, if a user has that email, return true 
-boolean userDB::checkEmail(string email) {
+bool userDB::checkEmail(string email) {
 
     // Make sure the connection is still valid
     if (!conn) {
@@ -146,7 +146,7 @@ boolean userDB::checkEmail(string email) {
 }
 
 //looks for user in database, true if user exists, false if user no exist 
-boolean userDB::checkUser(string username) {
+bool userDB::checkUser(string username) {
     // Make sure the connection is still valid
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -169,7 +169,7 @@ boolean userDB::checkUser(string username) {
 }
 
 //checks if given username is associated with given password (checks if username + password combination is valid) 
-boolean userDB::checkPassword(string username, string password){
+bool userDB::checkPassword(string username, string password){
     // Make sure the connection is still valid
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
