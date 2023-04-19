@@ -35,6 +35,9 @@ public:
     
     void addEntry(string user,string email,string password,string color, bool active);
     void editEntry(string user,string email,string password,string color, bool active);
+    boolean checkEmail(string email); 
+        
+        
     void deleteEntry(string idnum);
 private:
     const string db_url=DB_URL;
