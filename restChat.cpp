@@ -12,6 +12,7 @@
 #include <string>
 #include "httplib.h"
 #include "user.h"
+#include "userDB.h"
 
 using namespace httplib;
 using namespace std;
