@@ -35,7 +35,7 @@ public:
     
     void addEntry(string user,string email,string password,string color, bool active);
     void editEntry(string user,string email,string password,string color, bool active);
-    boolean checkEmail(string email); 
+    bool checkEmail(string email); 
         
         
     void deleteEntry(string idnum);
