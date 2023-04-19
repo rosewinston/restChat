@@ -121,6 +121,33 @@ userEntry userDB::fetchEntry(string username){
     return entry;
 }
 
+vector<userEntry> userDB::findByEmail(string email) {
+
+	vector<userEntry> list;
+
+    // Make sure the connection is still valid
+    if (!conn) {
+   		cerr << "Invalid database connection" << endl;
+   		exit (EXIT_FAILURE);
+   	}	
+    // Create a new Statement
+	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+
+    // Execute query
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Email like '%"+email+"%'");
+
+    // Loop through and print results
+    while (res->next()) {
+    	userEntry entry(res->getString("Username"),res->getString("Email"),
+			res->getString("Password"),res->getString("Color"),
+	    	res->getString("Active"));
+
+	    list.push_back(entry);
+
+    }
+    return list;
+}
+
 void userDB::editEntry(string username,string email,string password, string color, string active){
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
