@@ -31,8 +31,8 @@ using namespace std;
 class userDB {
 public:
     userDB();
-    vector<contactEntry> find(string search);
     userEntry fetchEntry(string user);
+    
     void addEntry(string user,string email,string password,string color, bool active);
     void editEntry(string user,string email,string password,string color, bool active);
     void deleteEntry(string idnum);
