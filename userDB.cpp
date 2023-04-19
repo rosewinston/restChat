@@ -64,7 +64,7 @@ void userDB::addEntry(string username,string email,string password,string color,
 
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
 	
-  	stmnt->executeQuery("INSERT INTO users(Username,Email,Password,Color,Active) VALUES ('"+username+"','"+email+"','"+password+"','"+color+"','+active+'")");
+  	stmnt->executeQuery("INSERT INTO users(Username,Email,Password,Color,Active) VALUES ('"+username+"','"+email+"','"+password+"','"+color+"','+active+')");
 }
 
 // string "id" --> string "username"
