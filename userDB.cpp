@@ -55,7 +55,7 @@ userDB::userDB() {
 }
 
 
-void userDB::addEntry(string username,string email,string password,string color,string active){
+void userDB::addEntry(string username,string email,string password,string color,bool active){
 
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -168,7 +168,7 @@ bool userDB::checkPassword(string username, string password){
 
 
 
-void userDB::editEntry(string username,string email,string password, string color, string active){
+void userDB::editEntry(string username,string email,string password, string color, bool active){
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
