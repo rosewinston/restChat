@@ -13,6 +13,7 @@
 #include "httplib.h"
 #include "user.h"
 #include "userDB.h"
+#include "userEntry.h" 
 
 using namespace httplib;
 using namespace std;
