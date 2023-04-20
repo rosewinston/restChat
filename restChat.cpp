@@ -96,7 +96,7 @@ void addUser(string username, string email, string password, string color, map<s
 	user newUser(username, email, password, color, false);
 	
 	//trying userDB::addEntry (see userDB.cpp) below
-	usrDB.addEntry(username, email, password, color, "false");
+	userDB.addEntry(username, email, password, color, "false");
 	
         cout << "user created" << endl;
 	userMap[username]=newUser;
