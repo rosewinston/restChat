@@ -96,7 +96,7 @@ void addUser(string username, string email, string password, string color, map<s
 	user newUser(username, email, password, color, false);
 	
 	//trying userDB::addEntry (see userDB.cpp) below
-	addEntry(username, email, password, color, "false");
+	usrDB.addEntry(username, email, password, color, "false");
 	
         cout << "user created" << endl;
 	userMap[username]=newUser;
@@ -134,6 +134,8 @@ int main(void) {
   map<string, user> userMap;
   map<string,string> tokenMap;
   addUser("admin","test1234","password","7d9dde",userMap,masterUserList);
+  
+  userDB usrDB; 
 	
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
