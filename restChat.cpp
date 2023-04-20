@@ -96,7 +96,7 @@ void addUser(string username, string email, string password, string color, map<s
 	user newUser(username, email, password, color, false);
 	
 	//trying userDB::addEntry (see userDB.cpp) below
-	userDB.addEntry(username, email, password, color, "false");
+	//userDB.addEntry(username, email, password, color, "false");
 	
         cout << "user created" << endl;
 	userMap[username]=newUser;
@@ -154,7 +154,8 @@ int main(void) {
     string color = req.matches[4];
     string result;
     cout << username << email << password << color << endl;
-    result = checkEmail(username,email,password,color,userMap,masterUserList);
+   // result = checkEmail(username,email,password,color,userMap,masterUserList);
+    usrDB.addEntry(username, email, password, color, "false");
 	res.set_content(result, "text/json");
   });
 
