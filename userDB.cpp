@@ -72,7 +72,7 @@ bool userDB::checkEmail(string email) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    sql::ResultSet res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");	 
+    sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");	 
     while (res->next()) {
     	status = res->getInt(1);
     }
@@ -90,7 +90,7 @@ bool userDB::checkUser(string username) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    sql::ResultSet res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%'");
     while (res->next()) {
     	status = res->getInt(1);
     }
@@ -107,7 +107,7 @@ bool userDB::checkPassword(string username, string password){
     // Create a new Statement
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     // Execute query
-    sql::ResultSet res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
+    sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
     while (res->next()) {
     	status = res->getInt(1);
     }
