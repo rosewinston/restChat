@@ -32,6 +32,7 @@ class userDB {
 public:
     userDB();
     string fetchColor(string user);
+    string findUsernames();
     bool fetchActive(string user);
     void addEntry(string user,string email,string password,string color, string active);
     void editEntry(string user,string email,string password,string color, string active);
