@@ -34,7 +34,7 @@ restChat.o: restChat.cpp userEntry.h userDB.h httplib.h user.h
 user.o: user.cpp user.h
 	$(CC) -c $(CFLAGS) user.cpp
 	
-restChat: restChat.o userDB.o userEntry.o
+restChat: restChat.o userDB.o userEntry.o user.o 
 	$(CC) restChat.o userDB.o userEntry.o user.o -L/usr/lib -o restChat -L/usr/local/lib -lmariadbcpp
 
 
