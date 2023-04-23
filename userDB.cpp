@@ -46,7 +46,7 @@ void userDB::addEntry(string username,string email,string password,string color,
   	stmnt->executeQuery("INSERT INTO users(Username,Email,Password,Color,Active) VALUES ('"+username+"','"+email+"','"+password+"','"+color+"','"+active+"')");
 }
 
-userEntry userDB::fetchColor(string username){
+string userDB::fetchColor(string username){
 
 	string color;	
 	
