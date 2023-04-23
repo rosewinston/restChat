@@ -116,12 +116,12 @@ string verifyUser(string username, string email, string password, string color, 
 int main(void) {
   Server svr;
   int nextUser=0;
+  userDB usrDB; 
   map<string,vector<string>> messageMap;
   vector<string> masterUserList = usrDB.findUsernames();
   vector<string> activeUserList;
   map<string, user> userMap;
   map<string,string> tokenMap;  
-  userDB usrDB; 
   	  
   cout << usrDB.checkEmail("winston1@kenyon.edu") << endl << usrDB.checkEmail("hitest125847") << endl;
 
