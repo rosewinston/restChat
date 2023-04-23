@@ -84,7 +84,7 @@ vector<string> userDB::findActiveUsers() {
     
     string userActive = "true"; 
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT Username FROM users WHEN Active = '"+userActive+"'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT Username FROM users WHERE Active = '"+userActive+"'");
     
     // Loop through and print results
     while (res->next()) {
