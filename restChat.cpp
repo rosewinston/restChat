@@ -124,7 +124,7 @@ int main(void) {
   vector<string> activeUserList;
   map<string, user> userMap;
   map<string,string> tokenMap;
-  addUser("admin","test1234","password","7d9dde",userMap,masterUserList);
+ // addUser("admin","test1234","password","7d9dde",userMap,masterUserList);
   
   userDB usrDB; 
   //usrDB.addEntry("admin","test1234","password","7d9dde","false");
