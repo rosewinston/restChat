@@ -75,7 +75,7 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
   for (int i=0; i<masterUserList.size(); i++){
 	string username = masterUserList[i];
 	bool status = usrDB.fetchStatus(username);
-	if (status == true) && find(activeUserList.begin(),activeUserList.end(), username) == activeUserList.end() { //check this line//
+	if (status == true) && find(activeUserList.begin(),activeUserList.end(), username) == activeUserList.end()) { //check this line//
 		activeUserList.push_back(username);
 	}
   }
@@ -119,7 +119,7 @@ int main(void) {
   int nextUser=0;
   userDB usrDB; 
   map<string,vector<string>> messageMap;
-  vector<string> masterUserList = usrDB.findUsernames();
+  vector<string> masterUserList = usrDB.findUsernames("");
   vector<string> activeUserList;
   map<string, user> userMap;
   map<string,string> tokenMap;  
