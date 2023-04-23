@@ -47,19 +47,13 @@ void userDB::addEntry(string username,string email,string password,string color,
 }
 
 string userDB::fetchColor(string username){
-
 	string color;	
-	
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
   	}
-
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
-
-  	
     sql::ResultSet *res = stmnt->executeQuery("SELECT Color FROM users WHERE Username = '"+username+"'");
-    
     while (res->next()) {
     	color = res->getString("Color");
     }
@@ -78,15 +72,11 @@ bool userDB::checkEmail(string email) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    bool res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");
-	
-    sql::ResultSet *resTest = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");
-   // cout<<"bool result: "<<res<<endl; 
-    //cout<<"statement direct: "<<stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'")<<endl;
-    //cout<<"resTest: "<<resTest->next(); 
-    //cout<<"restTest Type: " << typeid(resTest->next()).name()<<endl; 
-	
-    return res;
+    sql::ResultSet res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");	 
+    while (res->next()) {
+    	status = res->getInt(1);
+    }
+    return status;	
 }
 
 //looks for user in database, true if user exists, false if user no exist 
@@ -100,8 +90,11 @@ bool userDB::checkUser(string username) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    bool res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%'");
-    return res;
+    sql::ResultSet res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%'");
+    while (res->next()) {
+    	status = res->getInt(1);
+    }
+    return status;	
 }
 
 //checks if given username is associated with given password (checks if username + password combination is valid) 
@@ -113,10 +106,12 @@ bool userDB::checkPassword(string username, string password){
    	}	
     // Create a new Statement
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
-
     // Execute query
-    bool res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
-    return res;
+    sql::ResultSet res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
+    while (res->next()) {
+    	status = res->getInt(1);
+    }
+    return status;	
 }
 
 
@@ -130,12 +125,7 @@ void userDB::editEntry(string username,string email,string password, string colo
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
   	}
-
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
-
- 
-	
-	//changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
   	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Email = '"+email+"', Password = '"+password+"', Color =' "+color+"', Active = '"+active+"' WHERE Username = '"+username+"'");
   	
 }
@@ -145,12 +135,7 @@ void userDB::editStatus(string username, string active){
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
   	}
-
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
-
- 
-	
-	//changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
   	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Active = '"+active+"' WHERE Username = '"+username+"'");
   	
 }
