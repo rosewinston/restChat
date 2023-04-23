@@ -136,7 +136,7 @@ int main(void) {
   addUser("admin","test1234","password","7d9dde",userMap,masterUserList);
   
   userDB usrDB; 
-  usrDB.addEntry("admin","test1234","password","7d9dde",userMap,masterUserList);
+  usrDB.addEntry("admin","test1234","password","7d9dde","false");
 	  
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
