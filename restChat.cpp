@@ -72,7 +72,6 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
   }
   result+= "],";
   string activeList = "\"activelist\":[";
-  activeUserList = usrDB.findActiveUsers();
   first = true;
   for (int i=0; i<activeUserList.size(); i++) {
 	  if (not first) activeList += ",";
@@ -114,12 +113,20 @@ int main(void) {
   userDB usrDB; 
   map<string,vector<string>> messageMap;
   vector<string> masterUserList = usrDB.findUsernames();
-  vector<string> activeUserList;
+  vector<string> activeUserList = usrDB.findActiveUsers();
   map<string, user> userMap;
   map<string,string> tokenMap;  
+	
   	  
   cout << usrDB.checkEmail("winston1@kenyon.edu") << endl << usrDB.checkEmail("hitest125847") << endl;
 
+  for (string a: masterUserList){
+	  cout<<a<<endl;
+  }
+  for (string a: activeUserList){
+	  cout<<a<<endl;
+  }
+	
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
     res.set_header("Access-Control-Allow-Origin","*");
