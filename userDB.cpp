@@ -60,6 +60,20 @@ string userDB::fetchColor(string username){
     return color;
 }
 
+string userDB::fetchStatus(string username){
+    string status;	
+    if (!conn) {
+   		cerr << "Invalid database connection" << endl;
+   		exit (EXIT_FAILURE);
+  	}
+  	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
+    sql::ResultSet *res = stmnt->executeQuery("SELECT Active FROM users WHERE Username = '"+username+"'");
+    while (res->next()) {
+    	status = res->getString("Acive");
+    }
+    return status;
+}
+
 //takes in string email, and checks the database for any users that have that email. if no user has that email, return false, if a user has that email, return true 
 bool userDB::checkEmail(string email) {
     bool status;
