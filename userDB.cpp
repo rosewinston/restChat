@@ -138,7 +138,7 @@ bool userDB::checkEmail(string email) {
 
     // Execute query
    // sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");
-     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Email like '%"+email+"%'");
+     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Email = '%"+email+"%'");
 	
   //  while (res->next()) {
     	//status = res->getString("COUNT(1)");
@@ -168,6 +168,7 @@ bool userDB::checkEmail(string email) {
 //looks for user in database, true if user exists, false if user no exist 
 bool userDB::checkUser(string username) {
     bool status;
+    vector<userEntry> list; 
     // Make sure the connection is still valid
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -177,16 +178,33 @@ bool userDB::checkUser(string username) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%'");
+    //sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%'");
+     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '%"+username+"%'");
+
+	
     while (res->next()) {
-    	status = res->getString("Count(1)");
+    	userEntry entry(res->getString("Username"),res->getString("Email"),
+			res->getString("Password"),res->getString("Color"),
+	    	res->getString("Active"));
+	    	
+	    list.push_back(entry);
+
     }
+	
+
+    if (list.size()>0){
+	    status = true;
+    }else{status=  false;}
+
+    cout<<"vector size: "<<list.size()<<endl;
     return status;	
+	
 }
 
 //checks if given username is associated with given password (checks if username + password combination is valid) 
 bool userDB::checkPassword(string username, string password){
     bool status;
+    vector<userEntry> list; 
     // Make sure the connection is still valid
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -195,11 +213,27 @@ bool userDB::checkPassword(string username, string password){
     // Create a new Statement
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
+    //sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'");
+	
     while (res->next()) {
-    	status = res->getInt(1);
+    	userEntry entry(res->getString("Username"),res->getString("Email"),
+			res->getString("Password"),res->getString("Color"),
+	    	res->getString("Active"));
+	    	
+	    list.push_back(entry);
+
     }
+	
+
+    if (list.size()>0){
+	    status = true;
+    }else{status=  false;}
+
+    cout<<"vector size: "<<list.size()<<endl;
     return status;	
+	
+	
 }
 
 
