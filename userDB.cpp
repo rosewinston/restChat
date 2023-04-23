@@ -47,8 +47,8 @@ void userDB::addEntry(string username,string email,string password,string color,
 }
 
 string userDB::fetchColor(string username){
-	string color;	
-	if (!conn) {
+    string color;	
+    if (!conn) {
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
   	}
@@ -62,7 +62,7 @@ string userDB::fetchColor(string username){
 
 //takes in string email, and checks the database for any users that have that email. if no user has that email, return false, if a user has that email, return true 
 bool userDB::checkEmail(string email) {
-
+    bool status;
     // Make sure the connection is still valid
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -81,6 +81,7 @@ bool userDB::checkEmail(string email) {
 
 //looks for user in database, true if user exists, false if user no exist 
 bool userDB::checkUser(string username) {
+    bool status;
     // Make sure the connection is still valid
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -99,6 +100,7 @@ bool userDB::checkUser(string username) {
 
 //checks if given username is associated with given password (checks if username + password combination is valid) 
 bool userDB::checkPassword(string username, string password){
+    bool status;
     // Make sure the connection is still valid
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
