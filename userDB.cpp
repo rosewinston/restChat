@@ -46,6 +46,30 @@ void userDB::addEntry(string username,string email,string password,string color,
   	stmnt->executeQuery("INSERT INTO users(Username,Email,Password,Color,Active) VALUES ('"+username+"','"+email+"','"+password+"','"+color+"','"+active+"')");
 }
 
+vector<masterUserList> userDB::findUsernames() {
+
+	vector<masterUserList> list;
+    
+    // Make sure the connection is still valid
+    if (!conn) {
+   		cerr << "Invalid database connection" << endl;
+   		exit (EXIT_FAILURE);
+   	}	
+    // Create a new Statement
+	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+    
+    // Execute query
+    sql::ResultSet *res = stmnt->executeQuery("SELECT Username FROM users");
+    
+    // Loop through and print results
+    while (res->next()) {
+    	contactEntry entry(res->getString("Username"));
+	    list.push_back(entry);
+    }
+    return list;
+
+}
+
 string userDB::fetchColor(string username){
     string color;	
     if (!conn) {
