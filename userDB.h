@@ -40,6 +40,7 @@ public:
     bool checkEmail(string email); 
     bool checkUser(string user);
     bool checkPassword(string user, string password);
+    vector<string> findActiveUsers(); 
     
         
         
