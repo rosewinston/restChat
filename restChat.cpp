@@ -120,13 +120,6 @@ int main(void) {
   	  
   cout << usrDB.checkEmail("winston1@kenyon.edu") << endl << usrDB.checkEmail("hitest125847") << endl;
 
-  for (string a: masterUserList){
-	  cout<<a<<endl;
-  }
-  for (string a: activeUserList){
-	  cout<<a<<endl;
-  }
-	
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
     res.set_header("Access-Control-Allow-Origin","*");
