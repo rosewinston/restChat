@@ -37,7 +37,7 @@ public:
     void addEntry(string user,string email,string password,string color, string active);
     void editEntry(string user,string email,string password,string color, string active);
     void editStatus(string user, string active); 
-    string checkEmail(string email); 
+    bool checkEmail(string email); 
     bool checkUser(string user);
     bool checkPassword(string user, string password);
     vector<string> findActiveUsers(); 
