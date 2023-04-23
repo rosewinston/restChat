@@ -82,8 +82,9 @@ vector<string> userDB::findActiveUsers() {
     // Create a new Statement
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     
+    string userActive = "true"; 
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT Username FROM users WHEN Active = '+true+'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT Username FROM users WHEN Active = '"+userActive+"'");
     
     // Loop through and print results
     while (res->next()) {
