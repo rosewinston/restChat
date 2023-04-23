@@ -176,19 +176,36 @@ void userDB::editEntry(string username,string email,string password, string colo
 
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
 
-  	/*if (type != "Friend" && type != "Family" && type!="Business"){
-     	 type="Other";
-  	}
-  	
-	 if (!isValid(email))
-         {
-             email=" ";
-         }  */
+ 
 	
 	//changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
   	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Email = '"+email+"', Password = '"+password+"', Color =' "+color+"', Active = '"+active+"' WHERE Username = '"+username+"'");
   	
 }
+
+void userDB::editStatus(string username,string password, string active){
+	if (!conn) {
+   		cerr << "Invalid database connection" << endl;
+   		exit (EXIT_FAILURE);
+  	}
+
+  	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
+
+ 
+	
+	//changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
+  	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Password = '"+password+"', Active = '"+active+"' WHERE Username = '"+username+"'");
+  	
+}
+
+
+
+
+
+
+
+
+
 
 
 /*
