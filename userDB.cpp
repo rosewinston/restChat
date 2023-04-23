@@ -46,7 +46,6 @@ void userDB::addEntry(string username,string email,string password,string color,
   	stmnt->executeQuery("INSERT INTO users(Username,Email,Password,Color,Active) VALUES ('"+username+"','"+email+"','"+password+"','"+color+"','"+active+"')");
 }
 
-// string "id" --> string "username"
 userEntry userDB::fetchColor(string username){
 
 	userEntry entry;	
@@ -59,12 +58,10 @@ userEntry userDB::fetchColor(string username){
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
 
   	
-    //changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
     sql::ResultSet *res = stmnt->executeQuery("SELECT Color FROM users WHERE Username = '"+username+"'");
     
-    // Get username entry
-    if (res->next()) {
-    	entry = userEntry(res->getString("Color"));
+    while (rest->next()) {
+    	entry = res->getString("Color");
     }
     return entry;
 }
