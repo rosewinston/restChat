@@ -136,7 +136,8 @@ int main(void) {
   addUser("admin","test1234","password","7d9dde",userMap,masterUserList);
   
   userDB usrDB; 
-	
+  usrDB.addEntry("admin","test1234","password","7d9dde",userMap,masterUserList);
+	  
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
     res.set_header("Access-Control-Allow-Origin","*");
