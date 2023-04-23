@@ -104,16 +104,8 @@ bool userDB::checkEmail(string email) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Email = '%"+email+"%'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");
 
- 
-	
-    if (res->rowsCount() == 0){
-       return false; 
-    }else{
-       return true; 
-	
-    }
 }
 
 //looks for user in database, true if user exists, false if user no exist 
