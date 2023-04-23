@@ -128,8 +128,6 @@ int main(void) {
   userDB usrDB; 
   	  
   cout << usrDB.checkEmail("winston1@kenyon.edu") << endl << usrDB.checkEmail("hitest125847") << endl;
-  string test = usrDB.fetchColor("rose");
-  cout << test;
 
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
