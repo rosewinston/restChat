@@ -118,7 +118,7 @@ string userDB::fetchStatus(string username){
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
     sql::ResultSet *res = stmnt->executeQuery("SELECT Active FROM users WHERE Username = '"+username+"'");
     while (res->next()) {
-    	status = res->getString("Acive");
+    	status = res->getString("Active");
     }
     return status;
 }
@@ -126,6 +126,7 @@ string userDB::fetchStatus(string username){
 //takes in string email, and checks the database for any users that have that email. if no user has that email, return false, if a user has that email, return true 
 string userDB::checkEmail(string email) {
     string status;
+    vector<string> list;
     // Make sure the connection is still valid
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -140,10 +141,12 @@ string userDB::checkEmail(string email) {
     	//status = res->getString("COUNT(1)");
 	//status = res->getInt("COUNT(1)");
     	string entry(res->getString("COUNT(1)"));
-	   status = entry; 
-
+	  list.pushback(entry); 
+		 
     }
-	
+    if (list.size()>0){
+	    status = "1";
+    }else{status=  "0";}
 
     return status;	
 }
