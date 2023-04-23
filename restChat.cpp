@@ -72,7 +72,7 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
   }
   result+= "],";
   string activeList = "\"activelist\":[";
-  for (i = masterUserList.begin(); i != masterUserList.end(); ++i){
+  for (int i = masterUserList.begin(); i != masterUserList.end(); ++i){
 	username = masterUserList[i];
 	if ((usrDB.fetchStatus(username)== "true") && (find(activeUserList.begin(),activeUserList.end(), activeuser) == activeUserList.end()) { //check this line//
 		activeUserList.push_back(username);
@@ -92,13 +92,13 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 	return result;
 }
 
-void addUser(string username, string email, string password, string color, userDB &usrDB) {
+void addUser(string username, string email, string password, string color, userDB &usrDB, vector<string> &masterUserList) {
 	usrDB.addEntry(username, email, password, color, "false");
 	masterUserList.push_back(username);
         cout << "user created" << endl;
 }
 
-string verifyUser(string username, string email, string password, string color, userDB &usrDB) {
+string verifyUser(string username, string email, string password, string color, userDB &usrDB, vector<string> &masterUserList) {
 	string result;
 	bool emailExists = usrDB.checkEmail(email);
 	if (usrDB.checkUser(username) || emailExists) {
@@ -106,7 +106,7 @@ string verifyUser(string username, string email, string password, string color, 
 		result = "{\"status\":\"exists\"}";
 		return result;
     } 	else {
-    		addUser(username,email,password,color,usrDB);
+    		addUser(username,email,password,color,usrDB,masterUserList);
 		result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
 		return result;
     }
