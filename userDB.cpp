@@ -63,7 +63,7 @@ vector<string> userDB::findUsernames() {
     
     // Loop through and print results
     while (res->next()) {
-    	userEntry entry(res->getString("Username"));
+    	string entry(res->getString("Username"));
 	    list.push_back(entry);
     }
     return list;
@@ -87,7 +87,7 @@ vector<string> userDB::findActiveUsers() {
     
     // Loop through and print results
     while (res->next()) {
-    	userEntry entry(res->getString("Username"));
+    	string entry(res->getString("Username"));
 	    list.push_back(entry);
     }
     return list;
