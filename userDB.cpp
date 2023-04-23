@@ -46,9 +46,9 @@ void userDB::addEntry(string username,string email,string password,string color,
   	stmnt->executeQuery("INSERT INTO users(Username,Email,Password,Color,Active) VALUES ('"+username+"','"+email+"','"+password+"','"+color+"','"+active+"')");
 }
 
-vector<masterUserList> userDB::findUsernames() {
+vector<string> userDB::findUsernames() {
 
-	vector<masterUserList> list;
+	vector<string> list;
     
     // Make sure the connection is still valid
     if (!conn) {
