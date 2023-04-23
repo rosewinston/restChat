@@ -126,7 +126,8 @@ string userDB::fetchStatus(string username){
 //takes in string email, and checks the database for any users that have that email. if no user has that email, return false, if a user has that email, return true 
 string userDB::checkEmail(string email) {
     string status;
-    vector<string> list;
+   // vector<string> list;
+    vector<userEntry> list; 
     // Make sure the connection is still valid
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -136,14 +137,26 @@ string userDB::checkEmail(string email) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");	 
-    while (res->next()) {
+   // sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");
+     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM contacts WHERE Email like '%"+email+"%'");
+	
+  //  while (res->next()) {
     	//status = res->getString("COUNT(1)");
 	//status = res->getInt("COUNT(1)");
-    	string entry(res->getString("COUNT(1)"));
-	  list.push_back(entry); 
+    	//string entry(res->getString("COUNT(1)"));
+	  //list.push_back(entry); 
 		 
+   // }
+    while (res->next()) {
+    	userEntry entry(res->getString("Username"),res->getString("Email"),
+			res->getString("Password"),res->getString("Color"),
+	    	res->getString("Active"));
+	    	
+	    list.push_back(entry);
+
     }
+	
+
     if (list.size()>0){
 	    status = "1";
     }else{status=  "0";}
