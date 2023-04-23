@@ -124,8 +124,8 @@ string userDB::fetchStatus(string username){
 }
 
 //takes in string email, and checks the database for any users that have that email. if no user has that email, return false, if a user has that email, return true 
-bool userDB::checkEmail(string email) {
-    bool status;
+string userDB::checkEmail(string email) {
+    string status;
     // Make sure the connection is still valid
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
