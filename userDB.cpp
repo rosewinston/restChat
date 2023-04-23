@@ -74,7 +74,7 @@ bool userDB::checkEmail(string email) {
     // Execute query
     sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");	 
     while (res->next()) {
-    	status = res->getInt(1);
+    	status = res->getString("Count(1)");
     }
     return status;	
 }
@@ -93,7 +93,7 @@ bool userDB::checkUser(string username) {
     // Execute query
     sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%'");
     while (res->next()) {
-    	status = res->getInt(1);
+    	status = res->getString("Count(1)");
     }
     return status;	
 }
@@ -111,7 +111,7 @@ bool userDB::checkPassword(string username, string password){
     // Execute query
     sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
     while (res->next()) {
-    	status = res->getInt(1);
+    	status = res->getString("Count(1)");
     }
     return status;	
 }
