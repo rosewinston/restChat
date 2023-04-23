@@ -141,7 +141,7 @@ string userDB::checkEmail(string email) {
     	//status = res->getString("COUNT(1)");
 	//status = res->getInt("COUNT(1)");
     	string entry(res->getString("COUNT(1)"));
-	  list.pushback(entry); 
+	  list.push_back(entry); 
 		 
     }
     if (list.size()>0){
