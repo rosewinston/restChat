@@ -146,10 +146,7 @@ int main(void) {
     string color = req.matches[4];
     string result;
     cout << username << email << password << color << endl;
-   // result = checkEmail(username,email,password,color,userMap,masterUserList);
-    if (verifyUser()) {
-	    
-	  usrDB.addEntry(username, email, password, color, "false");
+    result = verifyUser(username,email,password,color,usrDB,userMap,masterUserList);
 	res.set_content(result, "text/json");
   });
 
