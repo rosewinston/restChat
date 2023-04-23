@@ -124,8 +124,8 @@ string userDB::fetchStatus(string username){
 }
 
 //takes in string email, and checks the database for any users that have that email. if no user has that email, return false, if a user has that email, return true 
-string userDB::checkEmail(string email) {
-    string status;
+bool userDB::checkEmail(string email) {
+    bool status;
    // vector<string> list;
     vector<userEntry> list; 
     // Make sure the connection is still valid
@@ -158,10 +158,10 @@ string userDB::checkEmail(string email) {
 	
 
     if (list.size()>0){
-	    status = "1";
-    }else{status=  "0";}
+	    status = true;
+    }else{status=  false;}
 
-    cout<<"vector size: "<<endl;
+    cout<<"vector size: "<<list.size()<<endl;
     return status;	
 }
 
