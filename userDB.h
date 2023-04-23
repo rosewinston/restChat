@@ -32,13 +32,13 @@ class userDB {
 public:
     userDB();
     string fetchColor(string user);
-    
+    bool fetchActive(string user);
     void addEntry(string user,string email,string password,string color, string active);
     void editEntry(string user,string email,string password,string color, string active);
     void editStatus(string user, string active); 
     bool checkEmail(string email); 
-    bool checkUser(string username);
-    bool checkPassword(string username, string password);
+    bool checkUser(string user);
+    bool checkPassword(string user, string password);
     
         
         
