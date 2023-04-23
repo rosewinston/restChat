@@ -148,6 +148,7 @@ string userDB::checkEmail(string email) {
 	    status = "1";
     }else{status=  "0";}
 
+    cout<<"vector size: "<<endl;
     return status;	
 }
 
