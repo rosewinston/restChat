@@ -138,7 +138,7 @@ bool userDB::checkEmail(string email) {
 
     // Execute query
    // sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");
-     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Email = '%"+email+"%'");
+     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Email = '"+email+"'");
 	
   //  while (res->next()) {
     	//status = res->getString("COUNT(1)");
@@ -179,7 +179,7 @@ bool userDB::checkUser(string username) {
 
     // Execute query
     //sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%'");
-     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '%"+username+"%'");
+     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '"+username+"'");
 
 	
     while (res->next()) {
@@ -214,7 +214,7 @@ bool userDB::checkPassword(string username, string password){
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     // Execute query
     //sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '"+username+"' AND Password = '"+password+"'");
 	
     while (res->next()) {
     	userEntry entry(res->getString("Username"),res->getString("Email"),
