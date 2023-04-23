@@ -72,9 +72,9 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
   }
   result+= "],";
   string activeList = "\"activelist\":[";
-  for (int i = masterUserList.begin(); i != masterUserList.end(); ++i){
-	username = masterUserList[i];
-	if ((usrDB.fetchStatus(username)== "true") && (find(activeUserList.begin(),activeUserList.end(), activeuser) == activeUserList.end()) { //check this line//
+  for (int i=0; i<masterUserList.size(); i++){
+	string activeUser = masterUserList[i];
+	if ((usrDB.fetchStatus(username)== "true") && (find(activeUserList.begin(),activeUserList.end(), activeUser) == activeUserList.end()) { //check this line//
 		activeUserList.push_back(username);
 	}
   }
