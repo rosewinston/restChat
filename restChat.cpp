@@ -94,8 +94,9 @@ void addUser(string username, string email, string password, string color, userD
 
 string verifyUser(string username, string email, string password, string color, userDB &usrDB, vector<string> &masterUserList) {
 	string result;
-	bool emailExists = usrDB.checkEmail(email);
-	if (usrDB.checkUser(username) || emailExists) {
+	string emailExists = usrDB.checkEmail(email);
+	bool emailExistsBool = stoi(emailExists);
+	if (usrDB.checkUser(username) || emailExistsBool) {
     		cout << "exists" << endl;
 		result = "{\"status\":\"exists\"}";
 		return result;
