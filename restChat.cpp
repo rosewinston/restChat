@@ -49,7 +49,7 @@ string verifyToken(string token, map<string,string> &tokenMap) {
 
 // Takes a username, message map, masterUserList, activeUserList, and user map
 // Returns a JSON-formatted string with the messages for the given user, masterUserList, and activeUserList
-string getMessagesJSON(string username, map<string,vector<string>> &messageMap,vector<string> &masterUserList,vector<string> &activeUserList, map<string,user> &userMap) {
+string getMessagesJSON(string username, map<string,vector<string>> &messageMap,vector<string> &masterUserList,vector<string> &activeUserList) {
 	/* retrieve json list of messages for this user along with a userlist*/
 	bool first = true;
 	string user;
@@ -72,9 +72,9 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
   }
   result+= "],";
   string activeList = "\"activelist\":[";
-  for (auto pair : userMap){
-	string activeuser = pair.first;
-	if (pair.second.getActive() && find(activeUserList.begin(),activeUserList.end(), activeuser) == activeUserList.end()) {
+  for (i = masterUserList.begin(); it != data.end(); ++it){
+	username = masterUserList[i];
+	if (usrDB.fetchStatus(username) && find(activeUserList.begin(),activeUserList.end(), activeuser) == activeUserList.end()) {
 		activeUserList.push_back(pair.first);
 	}
   }
@@ -92,16 +92,13 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 	return result;
 }
 
-void addUser(string username, string email, string password, string color, userDB &usrDB, map<string,user> &userMap, vector<string> &masterUserList) {
-	//userDB usrDB;
-	user newUser(username, email, password, color, false);
+void addUser(string username, string email, string password, string color, userDB &usrDB, vector<string> &masterUserList) {
 	usrDB.addEntry(username, email, password, color, "false");	
         cout << "user created" << endl;
-	userMap[username]=newUser;
 	masterUserList.push_back(username);
 }
 
-string verifyUser(string username, string email, string password, string color, userDB &usrDB, map<string,user> &userMap, vector<string> &masterUserList) {
+string verifyUser(string username, string email, string password, string color, userDB &usrDB, vector<string> &masterUserList) {
 	string result;
 	bool emailExists = usrDB.checkEmail(email);
 	if (usrDB.checkUser(username) || emailExists) {
@@ -109,7 +106,7 @@ string verifyUser(string username, string email, string password, string color, 
 		result = "{\"status\":\"exists\"}";
 		return result;
     } 	else {
-    		addUser(username,email,password,color,usrDB,userMap,masterUserList);
+    		addUser(username,email,password,color,usrDB,masterUserList);
 		result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
 		return result;
     }
@@ -146,7 +143,7 @@ int main(void) {
     string color = req.matches[4];
     string result;
     cout << username << email << password << color << endl;
-    result = verifyUser(username,email,password,color,usrDB,userMap,masterUserList);
+    result = verifyUser(username,email,password,color,usrDB,masterUserList);
 	res.set_content(result, "text/json");
   });
 
@@ -184,7 +181,7 @@ int main(void) {
     if (!messageMap.count(username)) {
     	result = "{\"status\":\"baduser\"}";
 	} else {
-		string userColor = userMap[username].getColor();
+		string userColor = usrDB.fetchColor(username);
 		addMessage(username,message,messageMap,userColor);
 		result = "{\"status\":\"success\"}";
 	}
@@ -196,7 +193,7 @@ int main(void) {
     string token = req.matches[1];
 	res.set_header("Access-Control-Allow-Origin","*");
     string username = verifyToken(token,tokenMap);
-    string resultJSON = getMessagesJSON(username,messageMap,masterUserList,activeUserList,userMap);
+    string resultJSON = getMessagesJSON(username,messageMap,masterUserList,activeUserList);
     res.set_content(resultJSON, "text/json");  
     });
 
