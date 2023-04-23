@@ -80,7 +80,6 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 	  activeList += user +"\"}";
 	  first = false;
   }
-	activeUserList.clear();
 	result+=activeList;
 	result += "]}";
 	return result;
