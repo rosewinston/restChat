@@ -158,19 +158,18 @@ int main(void) {
     string password = req.matches[2];
     string result;
     vector<string> empty;
-    cout << username << " joins" << endl;
     // Check if username and password matches with registered user
-    if (userMap.count(username)) {
-      if (password==userMap[username].getPassword()) {
+    if (usrDB.checkPassword(username, password)) {
         messageMap[username]=empty;
 		string token=generateToken(username, tokenMap);
 		result = "{\"status\":\"success\",\"user\":\"" + token + "\"}";
-      }
+	cout << username << " joins" << endl;
+	usrDB.editStatus(username, "true");
     }
     else {
       result = "{\"status\":\"exists\"}";
     }
-	userMap[username].setActive(true);
+	
     res.set_content(result, "text/json");
   });
 
@@ -213,7 +212,7 @@ int main(void) {
     string token = req.matches[1];
     string name = verifyToken(token,tokenMap);
     res.set_header("Access-Control-Allow-Origin","*");
-	userMap[name].setActive(false);
+	usrDB.editStatus(username, "false");
     string resultJSON = "{\"status\":\"success\",\"name\":\""+name+"\"}"; 
 	res.set_content(resultJSON, "text/json");
   });
