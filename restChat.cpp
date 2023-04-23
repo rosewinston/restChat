@@ -159,6 +159,7 @@ int main(void) {
     string result;
     vector<string> empty;
     // Check if username and password matches with registered user
+    cout<<"username: "<<username<<" "<<"password: "<<endl; 
     if (usrDB.checkPassword(username, password)) {
         messageMap[username]=empty;
 		string token=generateToken(username, tokenMap);
