@@ -124,11 +124,10 @@ int main(void) {
   vector<string> masterUserList;
   vector<string> activeUserList;
   map<string, user> userMap;
-  map<string,string> tokenMap;
- // addUser("admin","test1234","password","7d9dde",userMap,masterUserList);
-  
+  map<string,string> tokenMap;  
   userDB usrDB; 
-  //usrDB.addEntry("admin","test1234","password","7d9dde","false");
+
+  cout >> usrDB.checkPassword('admin','password');
 	  
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
