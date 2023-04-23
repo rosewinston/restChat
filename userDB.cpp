@@ -173,7 +173,7 @@ bool userDB::checkPassword(string username, string password){
     // Execute query
     sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
     while (res->next()) {
-    	status = res->getString("Count(1)");
+    	status = res->getInt(1);
     }
     return status;	
 }
