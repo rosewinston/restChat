@@ -101,7 +101,7 @@ void addUser(string username, string email, string password, string color, userD
 	masterUserList.push_back(username);
 }
 
-string verifyUser(string username, string password, string email,string color, userDB &usrDB, map<string,user> &userMap, vector<string> &masterUserList) {
+string verifyUser(string username, string email, string password, string color, userDB &usrDB, map<string,user> &userMap, vector<string> &masterUserList) {
 	string result;
 	bool emailExists = usrDB.checkEmail(email);
 	if (usrDB.checkUser(username) || emailExists) {
