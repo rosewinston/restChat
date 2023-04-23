@@ -3,6 +3,8 @@
 # sudo mkdir /var/www/html/restChat
 # sudo chown ubuntu /var/www/html/restChat
 
+
+/*
 all: PutHTML restChat
 
 PutHTML:
@@ -27,3 +29,4 @@ userDB.o: userDB.cpp userDB.h
 
 clean:
 	rm restChat *.o
+*/
