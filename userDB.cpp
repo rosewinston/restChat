@@ -47,7 +47,7 @@ void userDB::addEntry(string username,string email,string password,string color,
 }
 
 // string "id" --> string "username"
-userEntry userDB::fetchEntry(string username){
+userEntry userDB::fetchColor(string username){
 
 	userEntry entry;	
 	
@@ -60,13 +60,11 @@ userEntry userDB::fetchEntry(string username){
 
   	
     //changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '"+username+"'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT Color FROM users WHERE Username = '"+username+"'");
     
     // Get username entry
     if (res->next()) {
-    	entry = userEntry(res->getString("Username"),res->getString("Email"),
-			res->getString("Password"),res->getString("Color"),
-	    	res->getString("Active"));
+    	entry = userEntry(res->getString("Color"));
     }
     return entry;
 }
