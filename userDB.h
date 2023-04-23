@@ -32,7 +32,7 @@ class userDB {
 public:
     userDB();
     string fetchColor(string user);
-    string findUsernames();
+    vector<string> findUsernames();
     bool fetchStatus(string user);
     void addEntry(string user,string email,string password,string color, string active);
     void editEntry(string user,string email,string password,string color, string active);
