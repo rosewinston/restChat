@@ -212,7 +212,7 @@ int main(void) {
     string token = req.matches[1];
     string name = verifyToken(token,tokenMap);
     res.set_header("Access-Control-Allow-Origin","*");
-	usrDB.editStatus(username, "false");
+	usrDB.editStatus(name, "false");
     string resultJSON = "{\"status\":\"success\",\"name\":\""+name+"\"}"; 
 	res.set_content(resultJSON, "text/json");
   });
