@@ -138,9 +138,13 @@ string userDB::checkEmail(string email) {
     sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");	 
     while (res->next()) {
     	//status = res->getString("COUNT(1)");
-	status = res->getInt("COUNT(1)");
+	//status = res->getInt("COUNT(1)");
+    	string entry(res->getString("COUNT(1)"));
+	   status = entry; 
 
     }
+	
+
     return status;	
 }
 
