@@ -98,7 +98,7 @@ bool userDB::checkUser(string username) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    bool res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+username+"%'");
+    bool res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%'");
     return res;
 }
 
