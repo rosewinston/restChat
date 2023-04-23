@@ -84,6 +84,8 @@ bool userDB::checkEmail(string email) {
 
     // Execute query
     bool res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");
+    cout<<"bool result: "<<res<<endl; 
+    cout<<"statement direct: "<<stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'")<<endl;
     return res;
 }
 
