@@ -31,7 +31,7 @@ using namespace std;
 class userDB {
 public:
     userDB();
-    userEntry fetchEntry(string user);
+    userEntry fetchColor(string user);
     
     void addEntry(string user,string email,string password,string color, string active);
     void editEntry(string user,string email,string password,string color, string active);
