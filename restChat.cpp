@@ -119,7 +119,7 @@ int main(void) {
   int nextUser=0;
   userDB usrDB; 
   map<string,vector<string>> messageMap;
-  vector<string> masterUserList = usrDB.findUsernames("");
+  vector<string> masterUserList = usrDB.findUsernames();
   vector<string> activeUserList;
   map<string, user> userMap;
   map<string,string> tokenMap;  
