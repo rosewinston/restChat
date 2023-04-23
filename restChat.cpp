@@ -92,32 +92,23 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
 	return result;
 }
 
-void addUser(string username, string email, string password, string color, map<string,user> &userMap, vector<string> &masterUserList) {
+void addUser(string username, string email, string password, string color, userDB usrDB, map<string,user> &userMap, vector<string> &masterUserList) {
 	user newUser(username, email, password, color, false);
-	
-	//trying userDB::addEntry (see userDB.cpp) below
-	//userDB.addEntry(username, email, password, color, "false");
-	
+	usrDB.addEntry(username, email, password, color, "false");	
         cout << "user created" << endl;
 	userMap[username]=newUser;
 	masterUserList.push_back(username);
 }
 
-string checkEmail(string username, string password, string email,string color, map<string,user> &userMap, vector<string> &masterUserList) {
-	bool emailUnique = true;
+string verifyUser(string username, string password, string email,string color, userDB usrDB, map<string,user> &userMap, vector<string> &masterUserList) {
 	string result;
-	for (auto pair : userMap){
-		if (email == pair.second.getEmail()){
-			emailUnique = false;
-			cout << "email not unique" << endl;
-	   	} 
-	}
-	if (userMap.count(username) || !emailUnique) {
+	bool emailExists = usrDB.checkEmail(email);
+	if (usrDB.checkUser(username) || !emailExists) {
     		cout << "exists" << endl;
 		result = "{\"status\":\"exists\"}";
 		return result;
     } 	else {
-    		addUser(username,email,password,color,userMap,masterUserList);
+    		addUser(username,email,password,color,usrDB,userMap,masterUserList);
 		result = "{\"status\":\"success\",\"user\":\""+username+"\",\"email\":\""+email+"\",\"password\":\""+password+"\",\"color\":\""+color+"\"}";
 		return result;
     }
@@ -136,7 +127,7 @@ int main(void) {
   addUser("admin","test1234","password","7d9dde",userMap,masterUserList);
   
   userDB usrDB; 
-  usrDB.addEntry("admin","test1234","password","7d9dde","false");
+  //usrDB.addEntry("admin","test1234","password","7d9dde","false");
 	  
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
@@ -156,7 +147,9 @@ int main(void) {
     string result;
     cout << username << email << password << color << endl;
    // result = checkEmail(username,email,password,color,userMap,masterUserList);
-    usrDB.addEntry(username, email, password, color, "false");
+    if (verifyUser()) {
+	    
+	  usrDB.addEntry(username, email, password, color, "false");
 	res.set_content(result, "text/json");
   });
 
