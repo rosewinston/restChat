@@ -60,7 +60,7 @@ string userDB::fetchColor(string username){
   	
     sql::ResultSet *res = stmnt->executeQuery("SELECT Color FROM users WHERE Username = '"+username+"'");
     
-    while (rest->next()) {
+    while (res->next()) {
     	color = res->getString("Color");
     }
     return color;
