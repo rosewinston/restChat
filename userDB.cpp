@@ -183,7 +183,7 @@ void userDB::editEntry(string username,string email,string password, string colo
   	
 }
 
-void userDB::editStatus(string username,string password, string active){
+void userDB::editStatus(string username, string active){
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
@@ -194,7 +194,7 @@ void userDB::editStatus(string username,string password, string active){
  
 	
 	//changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
-  	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Password = '"+password+"', Active = '"+active+"' WHERE Username = '"+username+"'");
+  	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Active = '"+active+"' WHERE Username = '"+username+"'");
   	
 }
 
