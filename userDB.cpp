@@ -5,27 +5,6 @@
 #include "userDB.h"
 #include "userEntry.h"
 
-// Changed "contact" --> "user"
-// Changed "First" --> "Username"
-// Changed "Last" --> "Email"
-// Changed "Phone" --> "Password"
-// Changed "Type" --> "Color"
-// Changed "Email" --> "Active"
-
-
-/*bool isValid(const string& email)
-{
-  
-    // Regular expression definition
-    const regex pattern(
-        "(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
-  
-    // Match the string pattern
-    // with regular expression
-    return regex_match(email, pattern);
-}*/
-
-
 userDB::userDB() {
   	// Instantiate Driver
   	driver = sql::mariadb::get_driver_instance();
@@ -104,7 +83,6 @@ bool userDB::checkEmail(string email) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    //sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");
     bool res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");
     return res;
 }
@@ -120,16 +98,8 @@ bool userDB::checkUser(string username) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '%"+username+"%'");
-
- 
-	
-    if (res->rowsCount() == 0){
-       return false; 
-    }else{
-       return true; 
-	
-    }
+    bool res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+username+"%'");
+    return res;
 }
 
 //checks if given username is associated with given password (checks if username + password combination is valid) 
@@ -143,16 +113,8 @@ bool userDB::checkPassword(string username, string password){
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
-
- 
-	
-    if (res->rowsCount() == 0){
-       return false; 
-    }else{
-       return true; 
-	
-    }
+    bool res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
+    return res;
 }
 
 
