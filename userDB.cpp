@@ -81,7 +81,7 @@ userEntry userDB::fetchEntry(string username){
 
   	
     //changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM 'users' WHERE Username = '"+username+"'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '"+username+"'");
     
     // Get username entry
     if (res->next()) {
@@ -104,7 +104,7 @@ bool userDB::checkEmail(string email) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM 'users' WHERE Email = '%"+email+"%'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Email = '%"+email+"%'");
 
  
 	
@@ -127,7 +127,7 @@ bool userDB::checkUser(string username) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM 'users' WHERE Username = '%"+username+"%'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '%"+username+"%'");
 
  
 	
@@ -150,7 +150,7 @@ bool userDB::checkPassword(string username, string password){
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM 'users' WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
 
  
 	
@@ -179,7 +179,7 @@ void userDB::editEntry(string username,string email,string password, string colo
  
 	
 	//changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
-  	stmnt->executeQuery("UPDATE 'users' SET Username = '"+username+"', Email = '"+email+"', Password = '"+password+"', Color =' "+color+"', Active = '"+active+"' WHERE Username = '"+username+"'");
+  	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Email = '"+email+"', Password = '"+password+"', Color =' "+color+"', Active = '"+active+"' WHERE Username = '"+username+"'");
   	
 }
 
@@ -194,7 +194,7 @@ void userDB::editStatus(string username, string active){
  
 	
 	//changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
-  	stmnt->executeQuery("UPDATE 'users' SET Username = '"+username+"', Active = '"+active+"' WHERE Username = '"+username+"'");
+  	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Active = '"+active+"' WHERE Username = '"+username+"'");
   	
 }
 
