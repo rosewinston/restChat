@@ -48,7 +48,7 @@ void userDB::addEntry(string username,string email,string password,string color,
 
 userEntry userDB::fetchColor(string username){
 
-	userEntry entry;	
+	string color;	
 	
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -61,9 +61,9 @@ userEntry userDB::fetchColor(string username){
     sql::ResultSet *res = stmnt->executeQuery("SELECT Color FROM users WHERE Username = '"+username+"'");
     
     while (rest->next()) {
-    	entry = res->getString("Color");
+    	color = res->getString("Color");
     }
-    return entry;
+    return color;
 }
 
 //takes in string email, and checks the database for any users that have that email. if no user has that email, return false, if a user has that email, return true 
