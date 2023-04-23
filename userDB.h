@@ -33,7 +33,7 @@ public:
     userDB();
     string fetchColor(string user);
     string findUsernames();
-    bool fetchActive(string user);
+    bool fetchStatus(string user);
     void addEntry(string user,string email,string password,string color, string active);
     void editEntry(string user,string email,string password,string color, string active);
     void editStatus(string user, string active); 
