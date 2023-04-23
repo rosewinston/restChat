@@ -70,6 +70,30 @@ vector<string> userDB::findUsernames() {
 
 }
 
+vector<string> userDB::findActiveUsers() {
+
+	vector<string> list;
+    
+    // Make sure the connection is still valid
+    if (!conn) {
+   		cerr << "Invalid database connection" << endl;
+   		exit (EXIT_FAILURE);
+   	}	
+    // Create a new Statement
+	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+    
+    // Execute query
+    sql::ResultSet *res = stmnt->executeQuery("SELECT Username FROM users WHEN Active = true");
+    
+    // Loop through and print results
+    while (res->next()) {
+    	contactEntry entry(res->getString("Username"));
+	    list.push_back(entry);
+    }
+    return list;
+
+}
+
 string userDB::fetchColor(string username){
     string color;	
     if (!conn) {
