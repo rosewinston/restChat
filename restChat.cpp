@@ -127,7 +127,9 @@ int main(void) {
   map<string,string> tokenMap;  
   userDB usrDB; 
   	  
-  cout << usrDB.checkEmail("winston1@kenyon.edu") << endl << usrDB.checkEmail("hitest125847") << endl;	
+  cout << usrDB.checkEmail("winston1@kenyon.edu") << endl << usrDB.checkEmail("hitest125847") << endl;
+  cout << usrDB.fetchColor("rose") << endl;	
+
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
     res.set_header("Access-Control-Allow-Origin","*");
