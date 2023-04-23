@@ -88,8 +88,8 @@ bool userDB::checkEmail(string email) {
     sql::ResultSet *resTest = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");
    // cout<<"bool result: "<<res<<endl; 
     //cout<<"statement direct: "<<stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'")<<endl;
-    cout<<"resTest: "<<resTest->next(); 
-    cout<<"restTest Type: " << typeid(resTest->next()).name()<<endl; 
+    //cout<<"resTest: "<<resTest->next(); 
+    //cout<<"restTest Type: " << typeid(resTest->next()).name()<<endl; 
 	
     return res;
 }
