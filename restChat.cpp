@@ -94,9 +94,8 @@ void addUser(string username, string email, string password, string color, userD
 
 string verifyUser(string username, string email, string password, string color, userDB &usrDB, vector<string> &masterUserList) {
 	string result;
-	string emailExists = usrDB.checkEmail(email);
-	bool emailExistsBool = stoi(emailExists);
-	if (usrDB.checkUser(username) || emailExistsBool) {
+	bool emailExists = usrDB.checkEmail(email);
+	if (usrDB.checkUser(username) || emailExists) {
     		cout << "exists" << endl;
 		result = "{\"status\":\"exists\"}";
 		return result;
@@ -151,7 +150,6 @@ int main(void) {
     vector<string> empty;
     // Check if username and password matches with registered user
     cout<<"username: "<<username<<" "<<"password: "<<password<<endl; 
-    cout<<usrDB.checkPassword(username,password)<<endl; 
     if (usrDB.checkPassword(username, password)) {
         messageMap[username]=empty;
 		string token=generateToken(username, tokenMap);
