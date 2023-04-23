@@ -127,7 +127,7 @@ int main(void) {
   map<string,string> tokenMap;  
   userDB usrDB; 
 
-  cout >> usrDB.checkPassword('admin','password');
+  cout >> usrDB.checkPassword("admin","password");
 	  
   /* "/" just returnsAPI name */
   svr.Get("/", [](const Request & /*req*/, Response &res) {
