@@ -138,7 +138,7 @@ string userDB::checkEmail(string email) {
 
     // Execute query
    // sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");
-     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM contacts WHERE Email like '%"+email+"%'");
+     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Email like '%"+email+"%'");
 	
   //  while (res->next()) {
     	//status = res->getString("COUNT(1)");
