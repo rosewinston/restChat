@@ -108,7 +108,7 @@ bool userDB::checkEmail(string email) {
 
  
 	
-    if (*res->rowsCount() == 0){
+    if (res->rowsCount() == 0){
        return false; 
     }else{
        return true; 
