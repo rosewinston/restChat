@@ -125,17 +125,20 @@ bool userDB::checkEmail(string email) {
 
     // Execute query
     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Email = '"+email+"'");
+	if (res->next()) {
+		status = true;
+	}
+	else {status = false;}
 	
-    while (res->next()) {
-    	userEntry entry(res->getString("Username"),res->getString("Email"),
-			res->getString("Password"),res->getString("Color"),
-	    		res->getString("Active"));
-    	list.push_back(entry);
-    }
-    if (list.size()>0){
-	    status = true;
-    }else{status=  false;}
-    cout<<"vector size: "<<list.size()<<endl;
+//     while (res->next()) {
+//     	userEntry entry(res->getString("Username"),res->getString("Email"),
+// 			res->getString("Password"),res->getString("Color"),
+// 	    		res->getString("Active"));
+//     	list.push_back(entry);
+//     }
+//     if (list.size()>0){
+// 	    status = true;
+//     }else{status=  false;}
     return status;	
 }
 
@@ -154,17 +157,20 @@ bool userDB::checkUser(string username) {
     // Execute query
     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '"+username+"'");
 
+	if (res->next()) {
+		status = true;
+	}
+	else {status = false;}
 	
-    while (res->next()) {
-    	userEntry entry(res->getString("Username"),res->getString("Email"),
-			res->getString("Password"),res->getString("Color"),
-	    		res->getString("Active"));
-	list.push_back(entry);
-    }
-    if (list.size()>0){
-	    status = true;
-    }else{status=  false;}
-    cout<<"vector size: "<<list.size()<<endl;
+//     while (res->next()) {
+//     	userEntry entry(res->getString("Username"),res->getString("Email"),
+// 			res->getString("Password"),res->getString("Color"),
+// 	    		res->getString("Active"));
+// 	list.push_back(entry);
+//     }
+//     if (list.size()>0){
+// 	    status = true;
+//     }else{status=  false;}
     return status;	
 }
 
@@ -182,17 +188,20 @@ bool userDB::checkPassword(string username, string password){
     // Execute query
     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '"+username+"' AND Password = '"+password+"'");
 	
-    while (res->next()) {
-    	userEntry entry(res->getString("Username"),res->getString("Email"),
-			res->getString("Password"),res->getString("Color"),
-	    	res->getString("Active"));
+	if (res->next()) {
+		status = true;
+	}
+	else {status = false;}
+//     while (res->next()) {
+//     	userEntry entry(res->getString("Username"),res->getString("Email"),
+// 			res->getString("Password"),res->getString("Color"),
+// 	    	res->getString("Active"));
 	    	
-	    list.push_back(entry);
-    }
-    if (list.size()>0){
-	status = true;
-    }else{status=  false;}
-	cout<<"vector size: "<<list.size()<<endl;
+// 	    list.push_back(entry);
+//     }
+//     if (list.size()>0){
+// 	status = true;
+//     }else{status=  false;}
 	return status;		
 }
 
