@@ -5,21 +5,20 @@
 #include <string>
 #include <vector>
 
-//#include "mysql_connection.h"
-//#include "mysql_driver.h"
+// #include "mysql_connection.h"
+// #include "mysql_driver.h"
 #include <mariadb/conncpp.hpp>
 
-//#include <cppconn/driver.h>
-//#include <cppconn/exception.h>
-//#include <cppconn/resultset.h>
-//#include <cppconn/statement.h>
-//#include <cppconn/prepared_statement.h>
+// #include <cppconn/driver.h>
+// #include <cppconn/exception.h>
+// #include <cppconn/resultset.h>
+// #include <cppconn/statement.h>
+// #include <cppconn/prepared_statement.h>
 
 #include "userEntry.h"
 
 #ifndef USERDB_H
 #define USERDB_H
-
 
 #define DB_URL "jdbc:mariadb://localhost:3306/RestChatUsers"
 #define USER "root"
@@ -27,31 +26,30 @@
 
 using namespace std;
 
-class userDB {
+class userDB
+{
 public:
     userDB();
     string fetchColor(string user);
     vector<string> findUsernames();
     string fetchStatus(string user);
-    void addEntry(string user,string email,string password,string color, string active);
-    void editEntry(string user,string email,string password,string color, string active);
-    void editStatus(string user, string active); 
-    bool checkEmail(string email); 
+    void addEntry(string user, string email, string password, string color, string active);
+    void editEntry(string user, string email, string password, string color, string active);
+    void editStatus(string user, string active);
+    bool checkEmail(string email);
     bool checkUser(string user);
     bool checkPassword(string user, string password);
-    vector<string> findActiveUsers(); 
-    
-        
-        
+    vector<string> findActiveUsers();
+
     void deleteEntry(string idnum);
+
 private:
-    const string db_url=DB_URL;
-    const string user=USER;
-    const string pass=PASS;
-    sql::Driver* driver;
+    const string db_url = DB_URL;
+    const string user = USER;
+    const string pass = PASS;
+    sql::Driver *driver;
     sql::Properties properties;
     std::unique_ptr<sql::Connection> conn;
-
 };
 
 #endif /* contactDB_H */
