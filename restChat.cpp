@@ -73,6 +73,7 @@ string getMessagesJSON(string username, map<string,vector<string>> &messageMap,v
   result+= "],";
   string activeList = "\"activelist\":[";
   first = true;
+  activeUserList = usrDB.findActiveUsers();
   for (int i=0; i<activeUserList.size(); i++) {
 	  if (not first) activeList += ",";
 	  user = activeUserList[i];
@@ -112,7 +113,7 @@ int main(void) {
   userDB usrDB; 
   map<string,vector<string>> messageMap;
   vector<string> masterUserList = usrDB.findUsernames();
-  vector<string> activeUserList = usrDB.findActiveUsers();
+  vector<string> activeUserList;
   map<string, user> userMap;
   map<string,string> tokenMap;  
   
