@@ -4,7 +4,7 @@ userEntry::userEntry()
 {
 }
 
-
+// creates userEntry object with given parameters 
 userEntry::userEntry(sql::SQLString u, sql::SQLString e, sql::SQLString p, sql::SQLString c, sql::SQLString a)
 {
 	username = u;
@@ -14,6 +14,7 @@ userEntry::userEntry(sql::SQLString u, sql::SQLString e, sql::SQLString p, sql::
 	active = a;
 }
 
+// creates string result containing all attributes of userEntry object 
 string userEntry::text()
 {
 	string result = username + ". ";
@@ -24,6 +25,7 @@ string userEntry::text()
 	return result;
 }
 
+//formats userEntry object's attributes and information into json 
 string userEntry::json()
 {
 	string result = "{\"username\":\"" + username + "\",";
