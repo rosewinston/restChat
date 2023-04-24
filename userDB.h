@@ -3,7 +3,6 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
-/* uncomment for applications that use vectors */
 #include <vector>
 
 //#include "mysql_connection.h"
