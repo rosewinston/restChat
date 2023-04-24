@@ -137,16 +137,8 @@ bool userDB::checkEmail(string email) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-   // sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Email = '%"+email+"%'");
-     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Email = '"+email+"'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Email = '"+email+"'");
 	
-  //  while (res->next()) {
-    	//status = res->getString("COUNT(1)");
-	//status = res->getInt("COUNT(1)");
-    	//string entry(res->getString("COUNT(1)"));
-	  //list.push_back(entry); 
-		 
-   // }
     while (res->next()) {
     	userEntry entry(res->getString("Username"),res->getString("Email"),
 			res->getString("Password"),res->getString("Color"),
@@ -178,8 +170,7 @@ bool userDB::checkUser(string username) {
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
     // Execute query
-    //sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%'");
-     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '"+username+"'");
+    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '"+username+"'");
 
 	
     while (res->next()) {
@@ -198,7 +189,6 @@ bool userDB::checkUser(string username) {
 
     cout<<"vector size: "<<list.size()<<endl;
     return status;	
-	
 }
 
 //checks if given username is associated with given password (checks if username + password combination is valid) 
@@ -213,7 +203,6 @@ bool userDB::checkPassword(string username, string password){
     // Create a new Statement
 	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     // Execute query
-    //sql::ResultSet *res = stmnt->executeQuery("SELECT COUNT(1) FROM users WHERE Username = '%"+username+"%' AND Password = '%"+password+"%'" );
     sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM users WHERE Username = '"+username+"' AND Password = '"+password+"'");
 	
     while (res->next()) {
@@ -261,30 +250,3 @@ void userDB::editStatus(string username, string active){
   	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Active = '"+active+"' WHERE Username = '"+username+"'");
   	
 }
-
-
-
-
-
-
-
-
-
-
-
-/*
-void userDB::deleteEntry(string idnum){
-  // Establish Connection
-  std::unique_ptr<sql::Connection>  conn(driver->connect(db_url, properties));
-    
-  if (!conn) {
-   	cerr << "Invalid database connection" << endl;
-   	exit (EXIT_FAILURE);
-  }
-
-  std::auto_ptr<sql::Statement> stmt(conn->createStatement());
-
-  //changed WHERE ID='"+idnum+"' --> WHERE Username='"+username+"'
-  stmt->execute("DELETE FROM users WHERE Username='"+username+"'");
-}
-*/
