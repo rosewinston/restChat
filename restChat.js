@@ -168,7 +168,7 @@ function completeFetch(result) {
     updateChatMembers();
 }
 
-/* Check for new messaged */
+/* Check for new messages */
 function fetchMessage() {
     fetch(baseUrl + '/chat/fetch/' + token, {
         method: 'get'

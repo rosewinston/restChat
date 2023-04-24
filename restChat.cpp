@@ -55,7 +55,7 @@ string verifyToken(string token, map<string, string> &tokenMap)
 // Returns a JSON-formatted string with the messages for the given user, masterUserList, and activeUserList
 string getMessagesJSON(string username, map<string, vector<string>> &messageMap, vector<string> &masterUserList, vector<string> &activeUserList, userDB &usrDB)
 {
-  /* retrieve json list of messages for this user along with a userlist*/
+  /* retrieve json list of messages for this user along with a userlist and active userlist*/
   bool first = true;
   string user;
   string result = "{\"messages\":[";
@@ -69,6 +69,7 @@ string getMessagesJSON(string username, map<string, vector<string>> &messageMap,
   result += "],";
   messageMap[username].clear();
   first = true;
+  // create userlist to add to the json
   result += "\"userlist\":[";
   for (int i = 0; i < masterUserList.size(); i++)
   {
@@ -81,6 +82,7 @@ string getMessagesJSON(string username, map<string, vector<string>> &messageMap,
     first = false;
   }
   result += "],";
+  //create active list to add to the json
   string activeList = "\"activelist\":[";
   first = true;
   activeUserList = usrDB.findActiveUsers();
@@ -99,6 +101,7 @@ string getMessagesJSON(string username, map<string, vector<string>> &messageMap,
   return result;
 }
 
+//function to add user to the DB and the masterUserList (in case they were not already in this list when it was generated using the DB)
 void addUser(string username, string email, string password, string color, userDB &usrDB, vector<string> &masterUserList)
 {
   usrDB.addEntry(username, email, password, color, "false");
@@ -106,6 +109,7 @@ void addUser(string username, string email, string password, string color, userD
   cout << "user created" << endl;
 }
 
+//Verify if the username and email are previously unused before creating a new entry in the database
 string verifyUser(string username, string email, string password, string color, userDB &usrDB, vector<string> &masterUserList)
 {
   string result;
@@ -147,8 +151,7 @@ int main(void)
     res.set_header("Access-Control-Allow-Origin","*");
     res.set_content("Chat API", "text/plain"); });
 
-  // Registers a new user with the given username, email, password, and color
-  // Got rid of: bool active = true;
+  // Registers a new user in the database with the given username, email, password, and color
   svr.Get(R"(/chat/register/(.*)/(.*)/(.*)/(.*))", [&](const Request &req, Response &res)
           {
     res.set_header("Access-Control-Allow-Origin","*");

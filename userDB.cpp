@@ -154,7 +154,7 @@ bool userDB::checkEmail(string email)
 	return status;
 }
 
-// looks for user in database, true if user exists, false if user no exist
+// looks for user in database, true if user exists, false if user doesn't exist
 bool userDB::checkUser(string username)
 {
 	bool status;
@@ -207,6 +207,7 @@ bool userDB::checkPassword(string username, string password)
 	return status;
 }
 
+//unused function that allows for the editing of a user profile
 void userDB::editEntry(string username, string email, string password, string color, string active)
 {
 	if (!conn)
@@ -218,6 +219,7 @@ void userDB::editEntry(string username, string email, string password, string co
 	stmnt->executeQuery("UPDATE users SET Username = '" + username + "', Email = '" + email + "', Password = '" + password + "', Color =' " + color + "', Active = '" + active + "' WHERE Username = '" + username + "'");
 }
 
+//used to edit the status of users when they join or leave
 void userDB::editStatus(string username, string active)
 {
 	if (!conn)
