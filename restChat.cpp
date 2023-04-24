@@ -136,7 +136,6 @@ int main(void)
   map<string, vector<string>> messageMap;
   vector<string> masterUserList = usrDB.findUsernames();
   vector<string> activeUserList;
-  map<string, user> userMap;
   map<string, string> tokenMap;
 
   for (string a : activeUserList)
