@@ -28,14 +28,11 @@ userEntry.o: userEntry.cpp userEntry.h
 userDB.o: userDB.cpp userDB.h
 	$(CC) -c $(CFLAGS) -I/usr/include/cppconn userDB.cpp
 
-restChat.o: restChat.cpp userEntry.h userDB.h httplib.h user.h 
+restChat.o: restChat.cpp userEntry.h userDB.h httplib.h
 	$(CC) -c $(CFLAGS) restChat.cpp
 	
-user.o: user.cpp user.h
-	$(CC) -c $(CFLAGS) user.cpp
-	
-restChat: restChat.o userDB.o userEntry.o user.o 
-	$(CC) restChat.o userDB.o userEntry.o user.o -L/usr/lib -o restChat -L/usr/local/lib -lmariadbcpp
+restChat: restChat.o userDB.o userEntry.o
+	$(CC) restChat.o userDB.o userEntry.o -L/usr/lib -o restChat -L/usr/local/lib -lmariadbcpp
 
 
 clean:
