@@ -8,68 +8,56 @@
 userDB::userDB() {
   	// Instantiate Driver
   	driver = sql::mariadb::get_driver_instance();
-  	
  	// Configure Connection
   	// The URL or TCP connection string format is
   	// ``jdbc:mariadb://host:port/database``.
   	sql::SQLString url(db_url);
-
-    // Use a properties map for the other connection options
+	// Use a properties map for the other connection options
   	sql::Properties my_properties({{"user", user}, {"password",pass}});
   	// Save properties in object
   	properties = my_properties;
-
-    // Establish Connection
+    	// Establish Connection
   	std::unique_ptr<sql::Connection> my_conn(driver->connect(db_url, properties));
-    
     // Check success
     if (!my_conn) {
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
    	}	
-   	
    	// Save connection in object
    	conn = std::move(my_conn);
-   	
 }
 
-
+// add user entry with username, email, password, color and active
 void userDB::addEntry(string username,string email,string password,string color,string active){
-
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
-  	}
-
+	}
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
-	
   	stmnt->executeQuery("INSERT INTO users(Username,Email,Password,Color,Active) VALUES ('"+username+"','"+email+"','"+password+"','"+color+"','"+active+"')");
 }
 
+//create a vector of all users in the database
 vector<string> userDB::findUsernames() {
-
-	vector<string> list;
-    
+    vector<string> list;
     // Make sure the connection is still valid
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
    	}	
     // Create a new Statement
-	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
-    
+    std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     // Execute query
     sql::ResultSet *res = stmnt->executeQuery("SELECT Username FROM users");
-    
     // Loop through and print results
     while (res->next()) {
     	string entry(res->getString("Username"));
 	    list.push_back(entry);
     }
     return list;
-
 }
 
+//create a vector of all active users in the database
 vector<string> userDB::findActiveUsers() {
 
 	vector<string> list;
@@ -80,21 +68,19 @@ vector<string> userDB::findActiveUsers() {
    		exit (EXIT_FAILURE);
    	}	
     // Create a new Statement
-	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
-    
+    std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
     string userActive = "true"; 
     // Execute query
     sql::ResultSet *res = stmnt->executeQuery("SELECT Username FROM users WHERE Active = '"+userActive+"'");
-    
     // Loop through and print results
     while (res->next()) {
     	string entry(res->getString("Username"));
 	    list.push_back(entry);
     }
     return list;
-
 }
 
+//return the color of username from the database
 string userDB::fetchColor(string username){
     string color;	
     if (!conn) {
@@ -109,6 +95,7 @@ string userDB::fetchColor(string username){
     return color;
 }
 
+//return the status of user from the database
 string userDB::fetchStatus(string username){
     string status;	
     if (!conn) {
@@ -142,17 +129,12 @@ bool userDB::checkEmail(string email) {
     while (res->next()) {
     	userEntry entry(res->getString("Username"),res->getString("Email"),
 			res->getString("Password"),res->getString("Color"),
-	    	res->getString("Active"));
-	    	
-	    list.push_back(entry);
-
+	    		res->getString("Active"));
+    	list.push_back(entry);
     }
-	
-
     if (list.size()>0){
 	    status = true;
     }else{status=  false;}
-
     cout<<"vector size: "<<list.size()<<endl;
     return status;	
 }
@@ -176,17 +158,12 @@ bool userDB::checkUser(string username) {
     while (res->next()) {
     	userEntry entry(res->getString("Username"),res->getString("Email"),
 			res->getString("Password"),res->getString("Color"),
-	    	res->getString("Active"));
-	    	
-	    list.push_back(entry);
-
+	    		res->getString("Active"));
+	list.push_back(entry);
     }
-	
-
     if (list.size()>0){
 	    status = true;
     }else{status=  false;}
-
     cout<<"vector size: "<<list.size()<<endl;
     return status;	
 }
@@ -211,25 +188,13 @@ bool userDB::checkPassword(string username, string password){
 	    	res->getString("Active"));
 	    	
 	    list.push_back(entry);
-
     }
-	
-
     if (list.size()>0){
-	    status = true;
+	status = true;
     }else{status=  false;}
-
-    cout<<"vector size: "<<list.size()<<endl;
-    return status;	
-	
-	
+	cout<<"vector size: "<<list.size()<<endl;
+	return status;		
 }
-
-
-
-
-
-
 
 void userDB::editEntry(string username,string email,string password, string color, string active){
 	if (!conn) {
@@ -237,8 +202,7 @@ void userDB::editEntry(string username,string email,string password, string colo
    		exit (EXIT_FAILURE);
   	}
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
-  	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Email = '"+email+"', Password = '"+password+"', Color =' "+color+"', Active = '"+active+"' WHERE Username = '"+username+"'");
-  	
+  	stmnt->executeQuery("UPDATE users SET Username = '"+username+"', Email = '"+email+"', Password = '"+password+"', Color =' "+color+"', Active = '"+active+"' WHERE Username = '"+username+"'");	
 }
 
 void userDB::editStatus(string username, string active){
