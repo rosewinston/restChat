@@ -4,7 +4,7 @@ userEntry::userEntry()
 {
 }
 
-// COME BACK AND EDIT SQL DATATYPES BELOW
+
 userEntry::userEntry(sql::SQLString u, sql::SQLString e, sql::SQLString p, sql::SQLString c, sql::SQLString a)
 {
 	username = u;
