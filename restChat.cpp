@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <string>
 #include "httplib.h"
-#include "user.h"
 #include "userDB.h"
 #include "userEntry.h"
 
