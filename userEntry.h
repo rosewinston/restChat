@@ -9,7 +9,6 @@ class userEntry
 {
 public:
    userEntry();
-   // CHECK THE LINE BELOW AGAIN
    userEntry(sql::SQLString u, sql::SQLString e, sql::SQLString p, sql::SQLString c, sql::SQLString a);
    string text();
    string json();
